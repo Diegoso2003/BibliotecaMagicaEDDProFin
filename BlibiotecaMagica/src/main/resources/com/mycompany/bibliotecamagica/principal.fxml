@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="principal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="644.0" stylesheets="@estilos/principal.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.bibliotecamagica.controllers.PrincipalController">
+    <left>
+        <VBox alignment="TOP_CENTER" prefHeight="562.0" prefWidth="247.0" styleClass="nav-bar" BorderPane.alignment="CENTER">
+            <opaqueInsets>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </opaqueInsets>
+            <children>
+                <HBox alignment="CENTER" prefHeight="38.0" prefWidth="140.0">
+                    <children>
+                        <Label styleClass="titulo" alignment="CENTER" contentDisplay="CENTER" text="Biblioteca Magica" textAlignment="CENTER" textFill="WHITE">
+                            <font>
+                                <Font size="38.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="nav-item">
+                    <children>
+                        <SVGPath content="M14 4.5V9h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v7H2V2a2 2 0 0 1 2-2h5.5zM13 12h1v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2h1v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1zM.5 10a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1z" fill="WHITE" />
+                        <Label onMouseClicked="#cargarArchivo" text="  Cargar archivo" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </left>
+</BorderPane>
