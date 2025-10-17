@@ -1,0 +1,155 @@
+/* Paleta de colores - JavaFX no usa :root, se definen directamente */
+* {
+    color1: #f05c54;
+    color2: #a17457;
+    color3: #5c735e;
+    color4: #3d615b;
+    color5: #434247;
+}
+
+/* Estilos generales */
+.principal {
+    -fx-background-color: #434247;
+}
+
+.principal .label {
+    -fx-text-fill: white;
+    -fx-font-family: "Inter";
+}
+
+.subtitulo {
+    -fx-font-size: 18px;
+}
+
+/* Barra de navegación */
+.nav-bar {
+    -fx-background-color: #3d615b;
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}
+
+/* Etiquetas en la barra de navegación */
+.nav-item .label {
+    -fx-text-fill: white;
+    -fx-font-family: "Inter";
+    -fx-font-size: 18px;
+}
+
+/* Título principal */
+.titulo {
+    -fx-font-family: "Inter";
+    -fx-font-weight: bold;
+    -fx-font-size: 24px;
+}
+
+/* Items de navegación con HBox */
+.nav-item {
+    -fx-padding: 5;
+}
+
+.nav-item:hover {
+    -fx-background-color: #5c735e;
+    -fx-cursor: hand;
+    -fx-background-radius: 5;
+}
+
+/* SVGPath color */
+.nav-bar .svg-path {
+    -fx-fill: white;
+}
+
+/* Área de contenido principal */
+.content-area {
+    -fx-background-color: #434247;
+    -fx-padding: 20;
+}
+
+/* Botones primarios */
+.btn-primary {
+    -fx-background-color: #5c735e;
+    -fx-text-fill: white;
+    -fx-font-family: "Inter";
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #3d615b;
+}
+
+/* Botones secundarios */
+.btn-secondary {
+    -fx-background-color: #a17457;
+    -fx-text-fill: white;
+    -fx-font-family: "Inter";
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #8f6549;
+}
+
+/* Tarjetas */
+.card {
+    -fx-background-color: #3d615b;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
+}
+
+/* Texto en tarjetas */
+.card .label {
+    -fx-text-fill: white;
+}
+
+/* Items seleccionados */
+.selected {
+    -fx-background-color: #5c735e;
+    -fx-border-color: #f05c54;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+/* Campos de texto */
+.text-field {
+    -fx-background-color: #434247;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #999999;
+    -fx-border-color: #5c735e;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8;
+}
+
+.text-field:focused {
+    -fx-border-color: #f05c54;
+    -fx-border-width: 2;
+}
+
+/* Separadores */
+.separator .line {
+    -fx-background-color: #5c735e;
+}
+
+.fab-button {
+    -fx-background-color: transparent; /* morado tipo Material Design */
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+    -fx-text-fill: white;
+    -fx-font-family: "Inter";
+    -fx-font-size: 15px;
+    -fx-padding: 10 20 10 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 3);
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+}
+
+.fab-button:pressed {
+    -fx-translate-y: 2px; /* simula presión */
+}
