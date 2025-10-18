@@ -4,6 +4,9 @@
  */
 package com.mycompany.bibliotecamagica.backend;
 
+import com.mycompany.bibliotecamagica.backend.exception.ArchivoException;
+import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
+import com.mycompany.bibliotecamagica.backend.validadores.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -54,9 +57,38 @@ public class LectorArchivo {
             String linea;
             while ((linea = br.readLine()) != null) {
                 contador++;
+                if(linea.isBlank()) continue;
+                try {
+                    switch(tipo){
+                    case 0 -> {
+                        var validador = new ValidadorBiblioteca();
+                        validador.agregarBiblioteca(linea);
+                    }
+                    default -> {
+                        
+                    }
+                }
+                } catch (EntradaException e){
+                    hayError = true;
+                    if(!error){
+                        error = true;
+                        log.append("Error en el archivo : ").append(archivo.getName());
+                    }
+                    log.append("\n\tError en la linea: ").append(contador).append("\n");
+                    log.append("\t\t").append(e.getMessage()).append("\n");
+                    log.append("\t\t").append(linea);
+                }
             }
         } catch (IOException e) {
             throw new ArchivoException("Error al leer el archivo " + archivo.getName());
         }
+    }
+
+    public boolean isHayError() {
+        return hayError;
+    }
+    
+    public String getLog() {
+        return log.toString();
     }
 }

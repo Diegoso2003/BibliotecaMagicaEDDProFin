@@ -63,7 +63,7 @@
         </HBox>
         <Button mnemonicParsing="false" onAction="#analizarArchivos" styleClass="btn-primary" text="Comenzar Analisis" />
         <Label prefHeight="31.0" prefWidth="320.0" styleClass="subtitulo" text="Errores encontrados en los archivos" textFill="WHITE" />
-        <TextArea prefHeight="1000.0" prefWidth="445.0" editable="false" styleClass="log-area" />
+        <TextArea fx:id="log" prefHeight="1000.0" prefWidth="445.0" editable="false" styleClass="log-area" />
     </children>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
