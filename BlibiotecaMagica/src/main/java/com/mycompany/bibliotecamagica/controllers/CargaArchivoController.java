@@ -4,19 +4,25 @@
  */
 package com.mycompany.bibliotecamagica.controllers;
 
+import com.mycompany.bibliotecamagica.backend.LectorArchivo;
+import com.mycompany.bibliotecamagica.backend.exception.ArchivoException;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.FillRule;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -32,6 +38,7 @@ public class CargaArchivoController implements Initializable {
     @FXML private HBox archivoBibliotecas;
     @FXML private HBox archivoConexiones;
     @FXML private HBox archivoLibros;
+    @FXML private TextArea log;
     private final File[] archivos = new File[3];
 
     /**
@@ -141,6 +148,27 @@ public class CargaArchivoController implements Initializable {
     
     @FXML
     private void analizarArchivos(){
-        
+        Alert alerta = null;
+        var lector = new LectorArchivo(archivos);
+        try {
+            lector.leer();
+            log.clear();
+            if(lector.isHayError()) {
+                log.setText(lector.getLog());
+            } else {
+                alerta = new Alert(AlertType.INFORMATION);
+                alerta.setTitle("Exito");
+                alerta.setContentText("informacion añadida correctamente");
+            }
+        } catch (ArchivoException ex) {
+            alerta = new Alert(AlertType.ERROR);
+            alerta.setTitle("Error");
+            alerta.setContentText(ex.getMessage());
+        }
+        if(lector.isHayError()) return;
+        Stage stage = (Stage) log.getScene().getWindow();
+        alerta.initOwner(stage);
+        alerta.initModality(Modality.WINDOW_MODAL);
+        alerta.showAndWait();
     }
 }

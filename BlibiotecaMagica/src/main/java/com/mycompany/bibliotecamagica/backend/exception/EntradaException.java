@@ -2,28 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Exception.java to edit this template
  */
-package com.mycompany.bibliotecamagica.backend;
+package com.mycompany.bibliotecamagica.backend.exception;
 
 /**
  *
  * @author rafael-cayax
  */
-public class ArchivoException extends Exception {
+public class EntradaException extends Exception {
 
     /**
-     * Creates a new instance of <code>ArchivoException</code> without detail
+     * Creates a new instance of <code>EntradaException</code> without detail
      * message.
      */
-    public ArchivoException() {
+    public EntradaException() {
     }
 
     /**
-     * Constructs an instance of <code>ArchivoException</code> with the
+     * Constructs an instance of <code>EntradaException</code> with the
      * specified detail message.
      *
      * @param msg the detail message.
      */
-    public ArchivoException(String msg) {
+    public EntradaException(String msg) {
         super(msg);
     }
 }
