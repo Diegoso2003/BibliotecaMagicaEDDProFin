@@ -150,9 +150,9 @@ public class CargaArchivoController implements Initializable {
     private void analizarArchivos(){
         Alert alerta = null;
         var lector = new LectorArchivo(archivos);
+        log.clear();
         try {
             lector.leer();
-            log.clear();
             if(lector.isHayError()) {
                 log.setText(lector.getLog());
             } else {

@@ -39,19 +39,22 @@ public abstract class Validador {
     protected int buscarNumero(StringBuilder linea, int inicio, boolean ultimo) throws EntradaException{
         int i = inicio;
         boolean num = false;
-        for(; inicio < this.linea.length(); inicio++){
+        for (; inicio < this.linea.length(); inicio++) {
             char c = this.linea.charAt(inicio);
-            if(!num && esNumero(c)){
-                num = true;
+            if(!esCaracterIgnorable(c) && !num){
+                if(!linea.isEmpty()) throw new EntradaException("Hace falta una coma");
                 i = inicio;
-            }else if((esCaracterIgnorable(c) || (c == ',' && !ultimo)) && num){
+                num = true;
+            } else if(esCaracterIgnorable(c) && num){
                 linea.append(this.linea.substring(i, inicio));
+                if(ultimo) return ++inicio;
+                num = false;
+            } else if(c == ',' && !ultimo){
+                if(num) linea.append(this.linea.substring(i, inicio));
                 return ++inicio;
-            }else if(!esCaracterIgnorable(c) && !esNumero(c)){
-                throw new EntradaException("Tiempo invalido : " + c);
             }
         }
-        linea.append(this.linea.substring(i));
+        if(inicio <= this.linea.length())linea.append(this.linea.substring(i));
         return inicio;
     }
     
@@ -68,8 +71,30 @@ public abstract class Validador {
         return c == ' ' || c == '\t' || c == '\n';
     }
     
+    private boolean esLetra(char c){
+        return (c >= 'A' && c <= 'Z') || c == 'Ñ';
+    }
+    
     private boolean esNumero(char c){
         return c >= '0' && c <= '9';
+    }
+    
+    protected void validarIDBiblio(StringBuilder texto) throws EntradaException{
+        if (texto.length() != 5 || !esLetra(texto.charAt(0)) || texto.charAt(1) != '-') {
+            throw new EntradaException("ID de biblioteca invalido: \"" + texto + "\"");
+        }
+        for (int i = 2; i < texto.length(); i++) {
+            char c = texto.charAt(i);
+            if(!esNumero(c)) throw new EntradaException("ID de biblioteca invalido: \"" + texto + "\"");
+        }
+    }
+    
+    protected long obtenerTiempo(StringBuilder texto) throws EntradaException{
+        try {
+            return Long.parseLong(texto.toString());
+        } catch (NumberFormatException e) {
+            throw new EntradaException("Tiempo ingresado invalido: \"" + texto + "\"");
+        }
     }
     
 }

@@ -5,6 +5,7 @@
 package com.mycompany.bibliotecamagica.backend.validadores;
 
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
+import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
 
 /**
  *
@@ -30,6 +31,8 @@ public class ValidadorBiblioteca extends Validador{
         inicio = buscarNumero(despacho, inicio, true);
         validarFinal(inicio);
         if(!camposValidos()) throw new EntradaException("Ingresar todos los campos");
+        Biblioteca nueva = validarYExtraerDatos();
+        agregarRegistroBiblioteca(nueva);
     }
     
     private boolean camposValidos(){
@@ -44,5 +47,20 @@ public class ValidadorBiblioteca extends Validador{
         ingreso = new StringBuilder();
         traspaso = new StringBuilder();
         despacho = new StringBuilder();
+    }
+
+    private Biblioteca validarYExtraerDatos() throws EntradaException {
+        Biblioteca biblioteca = new Biblioteca();
+        validarIDBiblio(id);
+        biblioteca.setId(id.toString());
+        biblioteca.setNombre(nombre.toString());
+        biblioteca.setUbicacion(ubicacion.toString());
+        biblioteca.settIngreso(obtenerTiempo(ingreso));
+        biblioteca.settTraspaso(obtenerTiempo(traspaso));
+        biblioteca.setdIntervalo(obtenerTiempo(despacho));
+        return biblioteca;
+    }
+
+    private void agregarRegistroBiblioteca(Biblioteca nueva) {
     }
 }
