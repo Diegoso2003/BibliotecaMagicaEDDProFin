@@ -10,8 +10,23 @@ import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
  *
  * @author rafael-cayax
  */
-public abstract class Validador {
+public abstract class Validador <T> {
     protected String linea;
+    
+    protected abstract void extraerDatos() throws EntradaException;
+    protected abstract void limpiarCampos();
+    protected abstract boolean camposValidos();
+    protected abstract T validarYObtenerRegistro() throws EntradaException;
+    protected abstract void agregarRegistro(T nuevo);
+    
+    public void iniciarAnalisis(String linea) throws EntradaException{
+        this.linea = linea;
+        limpiarCampos();
+        extraerDatos();
+        if(!camposValidos()) throw new EntradaException("Ingresar todos los campos");
+        T nueva = validarYObtenerRegistro();
+        agregarRegistro(nueva);
+    }
         
     protected int buscarCampo(StringBuilder linea, int inicio, boolean ultimo) throws EntradaException{
         int i = inicio;
@@ -75,7 +90,7 @@ public abstract class Validador {
         return (c >= 'A' && c <= 'Z') || c == 'Ñ';
     }
     
-    private boolean esNumero(char c){
+    protected boolean esNumero(char c){
         return c >= '0' && c <= '9';
     }
     
@@ -91,6 +106,7 @@ public abstract class Validador {
     
     protected long obtenerTiempo(StringBuilder texto) throws EntradaException{
         try {
+            if(texto.charAt(0) == '0') throw new NumberFormatException();
             return Long.parseLong(texto.toString());
         } catch (NumberFormatException e) {
             throw new EntradaException("Tiempo ingresado invalido: \"" + texto + "\"");

@@ -5,7 +5,7 @@
 package com.mycompany.bibliotecamagica.controllers;
 
 import com.mycompany.bibliotecamagica.App;
-import com.mycompany.bibliotecamagica.backend.VistasEnum;
+import com.mycompany.bibliotecamagica.backend.enums.VistasEnum;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

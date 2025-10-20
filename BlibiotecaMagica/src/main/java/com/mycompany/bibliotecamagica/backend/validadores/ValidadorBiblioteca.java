@@ -11,7 +11,7 @@ import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
  *
  * @author rafael-cayax
  */
-public class ValidadorBiblioteca extends Validador{
+public class ValidadorBiblioteca extends Validador<Biblioteca>{
 
     private StringBuilder id;
     private StringBuilder nombre;
@@ -20,9 +20,8 @@ public class ValidadorBiblioteca extends Validador{
     private StringBuilder traspaso;
     private StringBuilder despacho;
 
-    public void agregarBiblioteca(String linea) throws EntradaException {
-        this.linea = linea;
-        limpiarCampos();
+    @Override
+    protected void extraerDatos() throws EntradaException {
         int inicio = buscarCampo(id, 0, false);
         inicio = buscarCampo(nombre, inicio, false);
         inicio = buscarCampo(ubicacion, inicio, false);
@@ -30,17 +29,16 @@ public class ValidadorBiblioteca extends Validador{
         inicio = buscarNumero(traspaso, inicio, false);
         inicio = buscarNumero(despacho, inicio, true);
         validarFinal(inicio);
-        if(!camposValidos()) throw new EntradaException("Ingresar todos los campos");
-        Biblioteca nueva = validarYExtraerDatos();
-        agregarRegistroBiblioteca(nueva);
     }
     
-    private boolean camposValidos(){
+    @Override
+    protected boolean camposValidos(){
         return !id.toString().isBlank() && !nombre.toString().isBlank() && !ubicacion.toString().isBlank()
                 && !ingreso.toString().isBlank() && !traspaso.toString().isBlank() && !despacho.toString().isBlank();
     }
     
-    private void limpiarCampos(){
+    @Override
+    protected void limpiarCampos(){
         id = new StringBuilder();
         nombre = new StringBuilder();
         ubicacion = new StringBuilder();
@@ -49,7 +47,8 @@ public class ValidadorBiblioteca extends Validador{
         despacho = new StringBuilder();
     }
 
-    private Biblioteca validarYExtraerDatos() throws EntradaException {
+    @Override
+    protected Biblioteca validarYObtenerRegistro() throws EntradaException {
         Biblioteca biblioteca = new Biblioteca();
         validarIDBiblio(id);
         biblioteca.setId(id.toString());
@@ -61,6 +60,7 @@ public class ValidadorBiblioteca extends Validador{
         return biblioteca;
     }
 
-    private void agregarRegistroBiblioteca(Biblioteca nueva) {
+    @Override
+    protected void agregarRegistro(Biblioteca nueva) {
     }
 }

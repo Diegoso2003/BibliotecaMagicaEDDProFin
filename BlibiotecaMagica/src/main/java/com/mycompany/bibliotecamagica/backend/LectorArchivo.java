@@ -52,22 +52,15 @@ public class LectorArchivo {
         if (archivo == null) return;
         boolean error = false;
         int contador = 0;
+        Validador validador = obtenerValidador(tipo);
         try (BufferedReader br = new BufferedReader(
                 new FileReader(archivo, StandardCharsets.UTF_8))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 contador++;
                 if(linea.isBlank()) continue;
-                try {
-                    switch(tipo){
-                    case 0 -> {
-                        var validador = new ValidadorBiblioteca();
-                        validador.agregarBiblioteca(linea);
-                    }
-                    default -> {
-                        
-                    }
-                }
+                try{
+                    validador.iniciarAnalisis(linea);
                 } catch (EntradaException e){
                     hayError = true;
                     if(!error){
@@ -90,5 +83,14 @@ public class LectorArchivo {
     
     public String getLog() {
         return log.toString();
+    }
+    
+    private Validador obtenerValidador(int tipo) {
+        Validador v = switch(tipo){
+            case 0 -> new ValidadorBiblioteca();
+            case 1 -> new ValidadorConexion();
+            default -> new ValidadorLibro();
+        };
+        return v;
     }
 }
