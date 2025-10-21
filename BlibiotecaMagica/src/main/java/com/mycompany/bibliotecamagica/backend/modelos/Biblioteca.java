@@ -8,7 +8,7 @@ package com.mycompany.bibliotecamagica.backend.modelos;
  *
  * @author rafael-cayax
  */
-public class Biblioteca {
+public class Biblioteca implements Comparable<Biblioteca>{
     private String id;
     private String nombre;
     private String ubicacion;
@@ -63,5 +63,10 @@ public class Biblioteca {
     public void setdIntervalo(long dIntervalo) {
         this.dIntervalo = dIntervalo;
     }
-    
+
+    @Override
+    public int compareTo(Biblioteca o) {
+        return this.id.compareTo(o.id);
+    }
+
 }

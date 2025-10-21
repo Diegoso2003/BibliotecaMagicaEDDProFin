@@ -4,6 +4,8 @@
  */
 package com.mycompany.bibliotecamagica.backend.validadores;
 
+import com.mycompany.bibliotecamagica.backend.RedBibliotecas;
+import com.mycompany.bibliotecamagica.backend.estructuras.grafo.NodoGrafo;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 import com.mycompany.bibliotecamagica.backend.modelos.Conexion;
 import java.math.BigDecimal;
@@ -44,20 +46,35 @@ public class ValidadorConexion extends Validador<Conexion>{
 
     @Override
     protected Conexion validarYObtenerRegistro() throws EntradaException {
+        Conexion conexion = new Conexion();
         validarIDBiblio(origen);
         validarIDBiblio(destino);
-        long t = obtenerTiempo(tiempo);
-        try {
-            BigDecimal c = new BigDecimal(costo.toString()).setScale(2, RoundingMode.HALF_UP);
-        } catch (NumberFormatException e){
-            throw new EntradaException("Precio no valido: \"" + costo + "\"");
-        }
+        conexion.setTiempo(obtenerTiempo(tiempo));
+        conexion.setPrecio(obtenerPrecio());
         return new Conexion();
     }
 
     @Override
-    protected void agregarRegistro(Conexion nuevo) {
-
+    protected void agregarRegistro(Conexion nuevo) throws EntradaException {
+        nuevo.setBiblioAdyascente(obtenerNodoGrafo(destino.toString()).getBiblioteca());
+        NodoGrafo nodoOrigen = obtenerNodoGrafo(origen.toString());
+        if(!nodoOrigen.agregarConexion(nuevo)){
+            throw new EntradaException("Ya existe una conexion entre ambas bibliotecas.");
+        }
+    }
+    
+    private BigDecimal obtenerPrecio() throws EntradaException{
+        try {
+            if(costo.charAt(0) == '0') throw new NumberFormatException();
+            return new BigDecimal(costo.toString()).setScale(2, RoundingMode.HALF_UP);
+        } catch (NumberFormatException e){
+            throw new EntradaException("Precio no valido: \"" + costo + "\"");
+        }
+    }
+    
+    private NodoGrafo obtenerNodoGrafo(String id) throws EntradaException{
+        return RedBibliotecas.INSTANCIA.getRed().buscar(id).orElseThrow(() ->
+        new EntradaException("No se encontro una biblioteca con el id: \"" + id + "\""));
     }
     
 }

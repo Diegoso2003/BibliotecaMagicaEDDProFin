@@ -17,7 +17,7 @@ public abstract class Validador <T> {
     protected abstract void limpiarCampos();
     protected abstract boolean camposValidos();
     protected abstract T validarYObtenerRegistro() throws EntradaException;
-    protected abstract void agregarRegistro(T nuevo);
+    protected abstract void agregarRegistro(T nuevo) throws EntradaException;
     
     public void iniciarAnalisis(String linea) throws EntradaException{
         this.linea = linea;

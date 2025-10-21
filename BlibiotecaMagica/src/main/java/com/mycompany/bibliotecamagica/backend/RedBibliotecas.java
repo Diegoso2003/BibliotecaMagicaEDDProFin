@@ -4,15 +4,23 @@
  */
 package com.mycompany.bibliotecamagica.backend;
 
+import com.mycompany.bibliotecamagica.backend.estructuras.grafo.Grafo;
+
 /**
  *
  * @author rafael-cayax
  */
 public enum RedBibliotecas {
     INSTANCIA;
+    
+    private final Grafo red;
 
     private RedBibliotecas() {
-        
+        red = new Grafo();
+    }
+
+    public Grafo getRed() {
+        return red;
     }
     
 }

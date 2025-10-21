@@ -19,11 +19,13 @@ import java.nio.charset.StandardCharsets;
  */
 public class LectorArchivo {
     private final File[] archivos;
+    private final Validador[] validadores;
     private boolean hayError;
-    private StringBuilder log;
+    private final StringBuilder log;
 
     public LectorArchivo(File[] archivos) {
         this.archivos = archivos;
+        validadores = new Validador[]{new ValidadorBiblioteca(), new ValidadorConexion(), new ValidadorLibro()};
         hayError = false;
         log = new StringBuilder();
     }
@@ -52,7 +54,7 @@ public class LectorArchivo {
         if (archivo == null) return;
         boolean error = false;
         int contador = 0;
-        Validador validador = obtenerValidador(tipo);
+        Validador validador = validadores[tipo];
         try (BufferedReader br = new BufferedReader(
                 new FileReader(archivo, StandardCharsets.UTF_8))) {
             String linea;
@@ -65,7 +67,7 @@ public class LectorArchivo {
                     hayError = true;
                     if(!error){
                         error = true;
-                        log.append("Error en el archivo : ").append(archivo.getName());
+                        log.append("Error en el archivo: ").append(archivo.getName());
                     }
                     log.append("\n\tError en la linea: ").append(contador).append("\n");
                     log.append("\t\t").append(e.getMessage()).append("\n");
@@ -84,13 +86,5 @@ public class LectorArchivo {
     public String getLog() {
         return log.toString();
     }
-    
-    private Validador obtenerValidador(int tipo) {
-        Validador v = switch(tipo){
-            case 0 -> new ValidadorBiblioteca();
-            case 1 -> new ValidadorConexion();
-            default -> new ValidadorLibro();
-        };
-        return v;
-    }
+   
 }

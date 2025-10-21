@@ -4,6 +4,7 @@
  */
 package com.mycompany.bibliotecamagica.backend.validadores;
 
+import com.mycompany.bibliotecamagica.backend.RedBibliotecas;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
 
@@ -61,6 +62,9 @@ public class ValidadorBiblioteca extends Validador<Biblioteca>{
     }
 
     @Override
-    protected void agregarRegistro(Biblioteca nueva) {
+    protected void agregarRegistro(Biblioteca nueva) throws EntradaException {
+        if(!RedBibliotecas.INSTANCIA.getRed().agregar(nueva)){
+            throw new EntradaException("El id: \"" + id + "\" ingresado ya pertenece a una biblioteca existente.");
+        }
     }
 }
