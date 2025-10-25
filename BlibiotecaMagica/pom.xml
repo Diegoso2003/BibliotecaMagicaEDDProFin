@@ -20,6 +20,13 @@
             <artifactId>javafx-fxml</artifactId>
             <version>21.0.8</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>21.0.8</version>
+        </dependency>
+        
     </dependencies>
     <build>
         <plugins>
@@ -36,7 +43,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>com.mycompany.bibliotecamagica.App</mainClass>
+                    <mainClass>com.mycompany.bibliotecamagica/com.mycompany.bibliotecamagica.App</mainClass>
                 </configuration>
                 <executions>
                     <execution>

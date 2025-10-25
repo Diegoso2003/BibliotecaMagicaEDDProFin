@@ -31,7 +31,7 @@ public class ListaSimple<T> {
     public void agregarLista(ListaSimple<T> lista){
         IteradorLista<T> iterador = lista.getIterador();
         while(iterador.haySiguiente()){
-            agregar(iterador.getActual().getElemento());
+            agregar(iterador.getActual());
         }
     }
     

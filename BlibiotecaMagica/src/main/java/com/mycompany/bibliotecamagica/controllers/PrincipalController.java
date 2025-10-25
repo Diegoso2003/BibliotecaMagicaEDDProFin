@@ -39,15 +39,21 @@ public class PrincipalController implements Initializable {
             actual = nuevaVista;
             FXMLLoader fxml = new FXMLLoader(App.class.getResource(nuevaVista.getVentana() + ".fxml"));
             Node vista = fxml.load();
+            principal.setCenter(null);
             principal.setCenter(vista);
         } catch(IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
     
     @FXML
     private void cargarArchivo(){
         cargarVista(VistasEnum.CARGAR_ARCHIVO);
+    }
+    
+    @FXML
+    private void mostrarGrafo(){
+        cargarVista(VistasEnum.GRAFICA_GRAFO);
     }
     
 }

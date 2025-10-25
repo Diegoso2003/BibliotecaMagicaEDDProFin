@@ -19,6 +19,15 @@ public class Biblioteca implements Comparable<Biblioteca>{
     public String getId() {
         return id;
     }
+    
+    public String getIDNumerico(){
+        StringBuilder aux = new StringBuilder();
+        for(int i = 0; i < id.length(); i++){
+            char c = id.charAt(i);
+            if(c != '-') aux.append(c);
+        }
+        return aux.toString();
+    }
 
     public void setId(String id) {
         this.id = id;

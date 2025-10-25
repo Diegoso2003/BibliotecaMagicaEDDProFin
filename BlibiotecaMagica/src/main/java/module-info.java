@@ -2,7 +2,8 @@ module com.mycompany.bibliotecamagica {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.base;
-
+    requires javafx.web; 
+    
     opens com.mycompany.bibliotecamagica to javafx.fxml;
     opens com.mycompany.bibliotecamagica.controllers to javafx.fxml;
     exports com.mycompany.bibliotecamagica;

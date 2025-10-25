@@ -28,6 +28,10 @@ public class NodoGrafo  implements Comparable<NodoGrafo>{
     public boolean agregarConexion(Conexion conexion){
         return conexiones.agregar(conexion);
     }
+
+    public ListaDoble<Conexion> getConexiones() {
+        return conexiones;
+    }
     
     @Override
     public int compareTo(NodoGrafo o) {

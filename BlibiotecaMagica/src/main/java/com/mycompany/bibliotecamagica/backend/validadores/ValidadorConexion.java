@@ -51,7 +51,7 @@ public class ValidadorConexion extends Validador<Conexion>{
         validarIDBiblio(destino);
         conexion.setTiempo(obtenerTiempo(tiempo));
         conexion.setPrecio(obtenerPrecio());
-        return new Conexion();
+        return conexion;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ValidadorConexion extends Validador<Conexion>{
     }
     
     private NodoGrafo obtenerNodoGrafo(String id) throws EntradaException{
-        return RedBibliotecas.INSTANCIA.getRed().buscar(id).orElseThrow(() ->
+        return RedBibliotecas.INSTANCIA.buscar(id).orElseThrow(() ->
         new EntradaException("No se encontro una biblioteca con el id: \"" + id + "\""));
     }
     

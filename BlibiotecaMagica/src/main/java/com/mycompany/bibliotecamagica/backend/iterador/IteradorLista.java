@@ -23,8 +23,8 @@ public class IteradorLista<T> {
         return actual != null;
     }
 
-    public NodoSimple<T> getActual() {
-        return actual;
+    public T getActual() {
+        return actual.getElemento();
     }
     
 }
