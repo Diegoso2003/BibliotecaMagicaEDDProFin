@@ -55,9 +55,9 @@ public class ValidadorBiblioteca extends Validador<Biblioteca>{
         biblioteca.setId(id.toString());
         biblioteca.setNombre(nombre.toString());
         biblioteca.setUbicacion(ubicacion.toString());
-        biblioteca.settIngreso(obtenerTiempo(ingreso));
-        biblioteca.settTraspaso(obtenerTiempo(traspaso));
-        biblioteca.setdIntervalo(obtenerTiempo(despacho));
+        biblioteca.settIngreso(obtenerTiempo(ingreso.toString()));
+        biblioteca.settTraspaso(obtenerTiempo(traspaso.toString()));
+        biblioteca.setdIntervalo(obtenerTiempo(despacho.toString()));
         return biblioteca;
     }
 

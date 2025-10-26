@@ -38,4 +38,9 @@ public class NodoGrafo  implements Comparable<NodoGrafo>{
         return this.biblioteca.compareTo(o.biblioteca);
     }
 
+    @Override
+    public String toString() {
+        return biblioteca.toString();
+    }
+
 }

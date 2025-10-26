@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="15.0" styleClass="principal" stylesheets="@estilos/form_biblioteca.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.bibliotecamagica.controllers.FormBibliotecaController">
+   <children>
+      <Label prefWidth="412.0" styleClass="titulo" text="Agregar nueva biblioteca" />
+      <Label text="ID biblioteca" />
+      <TextField id="idBiblioteca" fx:id="idBiblioteca" promptText="A-001" />
+      <Label text="Nombre" />
+      <TextField id="nombreBiblioteca" fx:id="nombreBiblioteca" promptText="nombre de la biblioteca" />
+      <Label text="Ubicacion" />
+      <TextField id="ubicacionBiblioteca" fx:id="ubicacionBiblioteca" promptText="ubicacion de la biblioteca" />
+      <Label text="Tiempo de ingreso" />
+      <Spinner id="tIngreso" fx:id="tIngreso" editable="true" />
+      <Label text="Tiempo de transporte" />
+      <Spinner id="tTransporte" fx:id="tTransporte" editable="true" />
+      <Label text="Intervalo de despacho" />
+      <Spinner id="intDespacho" fx:id="intDespacho" editable="true" />
+      <Button mnemonicParsing="false" onAction="#agregarBiblioteca" styleClass="btn-primary" text="Agregar" />
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>

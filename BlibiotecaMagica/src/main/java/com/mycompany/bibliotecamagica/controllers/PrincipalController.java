@@ -56,4 +56,14 @@ public class PrincipalController implements Initializable {
         cargarVista(VistasEnum.GRAFICA_GRAFO);
     }
     
+    @FXML
+    private void cargarFormBiblioteca(){
+        cargarVista(VistasEnum.FORM_BIBLIOTECA);
+    }
+    
+    @FXML
+    private void cargarFormConexion(){
+        cargarVista(VistasEnum.FORM_CONEXION);
+    }
+    
 }

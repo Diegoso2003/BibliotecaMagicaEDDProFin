@@ -49,8 +49,11 @@ public class ValidadorConexion extends Validador<Conexion>{
         Conexion conexion = new Conexion();
         validarIDBiblio(origen);
         validarIDBiblio(destino);
-        conexion.setTiempo(obtenerTiempo(tiempo));
-        conexion.setPrecio(obtenerPrecio());
+        if(destino.compareTo(origen) == 0){
+            throw new EntradaException("Una biblioteca no puede tener una conexion consigo misma");
+        }
+        conexion.setTiempo(obtenerTiempo(tiempo.toString()));
+        conexion.setPrecio(obtenerPrecio(costo.toString()));
         return conexion;
     }
 
@@ -63,10 +66,10 @@ public class ValidadorConexion extends Validador<Conexion>{
         }
     }
     
-    private BigDecimal obtenerPrecio() throws EntradaException{
+    public BigDecimal obtenerPrecio(String costo) throws EntradaException{
         try {
-            if(costo.charAt(0) == '0') throw new NumberFormatException();
-            return new BigDecimal(costo.toString()).setScale(2, RoundingMode.HALF_UP);
+            if(costo.charAt(0) == '0' || costo.charAt(0) == '-') throw new NumberFormatException();
+            return new BigDecimal(costo).setScale(2, RoundingMode.HALF_UP);
         } catch (NumberFormatException e){
             throw new EntradaException("Precio no valido: \"" + costo + "\"");
         }

@@ -4,6 +4,7 @@
  */
 package com.mycompany.bibliotecamagica.backend.validadores;
 
+import com.mycompany.bibliotecamagica.backend.VarGlobales;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 import com.mycompany.bibliotecamagica.backend.modelos.EntradaLibro;
 
@@ -89,9 +90,13 @@ public class ValidadorLibro extends Validador<EntradaLibro>{
     private int obtenerAño() throws EntradaException{
         try {
             if(año.charAt(0) == '0') throw new NumberFormatException();
-            return Integer.parseInt(año.toString());
+            int añoint =  Integer.parseInt(año.toString());
+            if(añoint < VarGlobales.MIN_AÑO){
+                throw new EntradaException(String.format("El año debe ser mayor a: %,d, año ingresado: %,d",VarGlobales.MIN_AÑO,año));
+            }
+            return añoint;
         } catch(NumberFormatException e){
-            throw new EntradaException("Año invalido: \"" + año + "\"");
+            throw new EntradaException("Año ingresado invalido: \"" + año + "\"");
         }
     }
 }

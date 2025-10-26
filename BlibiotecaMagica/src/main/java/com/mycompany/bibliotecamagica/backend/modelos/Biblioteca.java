@@ -78,4 +78,9 @@ public class Biblioteca implements Comparable<Biblioteca>{
         return this.id.compareTo(o.id);
     }
 
+    @Override
+    public String toString() {
+        return nombre + " (" + id + ")";
+    }
+    
 }

@@ -4,6 +4,7 @@
  */
 package com.mycompany.bibliotecamagica.backend.validadores;
 
+import com.mycompany.bibliotecamagica.backend.VarGlobales;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 
 /**
@@ -104,10 +105,15 @@ public abstract class Validador <T> {
         }
     }
     
-    protected long obtenerTiempo(StringBuilder texto) throws EntradaException{
+    public long obtenerTiempo(String texto) throws EntradaException{
         try {
             if(texto.charAt(0) == '0') throw new NumberFormatException();
-            return Long.parseLong(texto.toString());
+            long tiempo = Long.parseLong(texto);
+            if(tiempo > VarGlobales.MAX_TIEMPO || tiempo < VarGlobales.MIN_TIEMPO){
+                throw new EntradaException(String.format("El tiempo debe estar entre %,d y %,d ms. Valor ingresado: %,d", 
+                  VarGlobales.MIN_TIEMPO, VarGlobales.MAX_TIEMPO, tiempo));
+            }
+            return tiempo;
         } catch (NumberFormatException e) {
             throw new EntradaException("Tiempo ingresado invalido: \"" + texto + "\"");
         }
