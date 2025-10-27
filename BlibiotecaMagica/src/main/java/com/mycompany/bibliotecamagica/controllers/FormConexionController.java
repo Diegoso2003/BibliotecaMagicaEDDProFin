@@ -5,21 +5,22 @@
 package com.mycompany.bibliotecamagica.controllers;
 
 import com.mycompany.bibliotecamagica.backend.RedBibliotecas;
-import com.mycompany.bibliotecamagica.backend.VarGlobales;
 import com.mycompany.bibliotecamagica.backend.estructuras.grafo.NodoGrafo;
+import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 import com.mycompany.bibliotecamagica.backend.iterador.IteradorLista;
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
+import com.mycompany.bibliotecamagica.backend.modelos.Conexion;
+import com.mycompany.bibliotecamagica.frontend.Auxiliar;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 
 /**
  * FXML Controller class
@@ -30,7 +31,7 @@ public class FormConexionController implements Initializable {
     @FXML private ComboBox<NodoGrafo> bibliotecaOrigen;
     @FXML private ComboBox<Biblioteca> bibliotecaDestino;
     @FXML private Spinner<Integer> tiempo;
-    @FXML private Spinner<Double> costo;
+    @FXML private Spinner<BigDecimal> costo;
     /**
      * Initializes the controller class.
      */
@@ -45,38 +46,42 @@ public class FormConexionController implements Initializable {
         }
         bibliotecaOrigen.setItems(lista1);
         bibliotecaDestino.setItems(lista2);
-        crearSpinnerConFiltro(tiempo);
+        Auxiliar.crearSpinnerConFiltro(tiempo);
+        Auxiliar.crearSpinnerPrecio(costo);
     }    
     
     @FXML
     private void agregarConexion(){
-        
+        try {
+            validarDatos();
+            agregarNuevaConexion();
+            System.out.println(costo.getValue());
+            Auxiliar.lanzarAlerta(Alert.AlertType.INFORMATION, "Exito", "Conexion agregada", costo);
+        } catch (EntradaException ex) {
+            Auxiliar.lanzarAlerta(Alert.AlertType.ERROR, "Error", ex.getMessage(), costo);
+        }
     }
-    
-    private void crearSpinnerConFiltro(Spinner spinner) {
-        var factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(VarGlobales.MIN_TIEMPO, 
-                VarGlobales.MAX_TIEMPO, VarGlobales.TIEMPO_DEFAULT, VarGlobales.INCREMENTO);
-        spinner.setValueFactory(factory);
-        TextField editor = spinner.getEditor();
-        editor.setTextFormatter(new TextFormatter<>(change -> {
-            if (!change.isContentChange()) {
-                return change;
-            }
-            String newText = change.getControlNewText();            
-            if (newText.isEmpty()) {
-                return change;
-            }
-            if (newText.matches("\\d*")){
-                try{
-                    Integer.valueOf(newText);
-                } catch(NumberFormatException e){
-                    return null;
-                }
-                return change;
-            }
-            return null;
-        }));
 
+    private void validarDatos() throws EntradaException {
+        if(bibliotecaOrigen.getValue() == null || bibliotecaDestino.getValue() == null
+                || tiempo.getValue() == null || costo.getValue() == null){
+            throw new EntradaException("Llenar correctamente todos los campos");
+        }
+        NodoGrafo origen = bibliotecaOrigen.getValue();
+        Biblioteca destino = bibliotecaDestino.getValue();
+        if(origen.getBiblioteca().equals(destino)){
+            throw new EntradaException("Una biblioteca no puede conectarse con sigo misma.");
+        }
+    }
+
+    private void agregarNuevaConexion() throws EntradaException {
+        Conexion conexion = new Conexion();
+        conexion.setBiblioAdyascente(bibliotecaDestino.getValue());
+        conexion.setPrecio(costo.getValue());
+        conexion.setTiempo(tiempo.getValue());
+        if(!bibliotecaOrigen.getValue().agregarConexion(conexion)){
+            throw new EntradaException("Ya existe una conexion entre ambas bibliotecas");
+        }
     }
     
 }

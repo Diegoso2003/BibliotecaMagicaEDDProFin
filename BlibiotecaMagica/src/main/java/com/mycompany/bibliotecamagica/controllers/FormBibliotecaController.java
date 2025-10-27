@@ -7,17 +7,14 @@ package com.mycompany.bibliotecamagica.controllers;
 import com.mycompany.bibliotecamagica.backend.VarGlobales;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 import com.mycompany.bibliotecamagica.backend.validadores.ValidadorBiblioteca;
+import com.mycompany.bibliotecamagica.frontend.Auxiliar;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -28,40 +25,31 @@ public class FormBibliotecaController implements Initializable {
     @FXML private TextField idBiblioteca;
     @FXML private TextField nombreBiblioteca;
     @FXML private TextField ubicacionBiblioteca;
-    @FXML private Spinner tIngreso;
-    @FXML private Spinner tTransporte;
-    @FXML private Spinner intDespacho;
+    @FXML private Spinner<Integer> tIngreso;
+    @FXML private Spinner<Integer> tTransporte;
+    @FXML private Spinner<Integer> intDespacho;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        crearSpinnerConFiltro(tIngreso);
-        crearSpinnerConFiltro(tTransporte);
-        crearSpinnerConFiltro(intDespacho);
+        Auxiliar.crearSpinnerConFiltro(tIngreso);
+        Auxiliar.crearSpinnerConFiltro(tTransporte);
+        Auxiliar.crearSpinnerConFiltro(intDespacho);
     }    
     
     @FXML
     private void agregarBiblioteca(){
-        Alert alerta = null;
         try {
             String texto = crearEntrada();
             ValidadorBiblioteca v = new ValidadorBiblioteca();
             v.iniciarAnalisis(texto);
             limpiarCampos();
-            alerta = new Alert(Alert.AlertType.INFORMATION);
-            alerta.setTitle("Exito");
-            alerta.setContentText("Biblioteca agregada correctamente.");
+            Auxiliar.lanzarAlerta(Alert.AlertType.INFORMATION, "Exito", "Biblioteca agregada correctamente", idBiblioteca);
         } catch (EntradaException ex) {
-            alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setTitle("Error");
-            alerta.setContentText(ex.getMessage());
+            Auxiliar.lanzarAlerta(Alert.AlertType.ERROR, "Error", ex.getMessage(), idBiblioteca);
         }
-        Stage stage = (Stage) idBiblioteca.getScene().getWindow();
-        alerta.initOwner(stage);
-        alerta.initModality(Modality.WINDOW_MODAL);
-        alerta.showAndWait();
     }
 
     private void limpiarCampos() {
@@ -87,29 +75,4 @@ public class FormBibliotecaController implements Initializable {
         return st.toString();
     }
     
-    private void crearSpinnerConFiltro(Spinner spinner) {
-        var factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(VarGlobales.MIN_TIEMPO, 
-                VarGlobales.MAX_TIEMPO, VarGlobales.TIEMPO_DEFAULT, VarGlobales.INCREMENTO);
-        spinner.setValueFactory(factory);
-        TextField editor = spinner.getEditor();
-        editor.setTextFormatter(new TextFormatter<>(change -> {
-            if (!change.isContentChange()) {
-                return change;
-            }
-            String newText = change.getControlNewText();            
-            if (newText.isEmpty()) {
-                return change;
-            }
-            if (newText.matches("\\d*")){
-                try{
-                    Integer.valueOf(newText);
-                } catch(NumberFormatException e){
-                    return null;
-                }
-                return change;
-            }
-            return null;
-        }));
-
-    }
 }

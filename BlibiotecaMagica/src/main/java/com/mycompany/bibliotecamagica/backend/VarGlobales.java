@@ -4,6 +4,8 @@
  */
 package com.mycompany.bibliotecamagica.backend;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author rafael-cayax
@@ -14,4 +16,8 @@ public class VarGlobales {
     public static final int TIEMPO_DEFAULT = 5_000;
     public static final int INCREMENTO = 100;
     public static final int MIN_AÑO = 1;
+    public static final BigDecimal MIN_PRECIO = new BigDecimal("1.00");
+    public static final BigDecimal MAX_PRECIO = new BigDecimal("1000000.00");
+    public static final BigDecimal PRECIO_DEFAULT = new BigDecimal("100.00");
+    public static final BigDecimal INCREMENTO_PRECIO = new BigDecimal("1");
 }
