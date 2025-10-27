@@ -5,6 +5,7 @@
 package com.mycompany.bibliotecamagica.controllers;
 
 import com.mycompany.bibliotecamagica.backend.RedBibliotecas;
+import com.mycompany.bibliotecamagica.backend.VarGlobales;
 import com.mycompany.bibliotecamagica.backend.estructuras.grafo.NodoGrafo;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 import com.mycompany.bibliotecamagica.backend.iterador.IteradorLista;
@@ -55,7 +56,7 @@ public class FormConexionController implements Initializable {
         try {
             validarDatos();
             agregarNuevaConexion();
-            System.out.println(costo.getValue());
+            limpiarCampos();
             Auxiliar.lanzarAlerta(Alert.AlertType.INFORMATION, "Exito", "Conexion agregada", costo);
         } catch (EntradaException ex) {
             Auxiliar.lanzarAlerta(Alert.AlertType.ERROR, "Error", ex.getMessage(), costo);
@@ -82,6 +83,11 @@ public class FormConexionController implements Initializable {
         if(!bibliotecaOrigen.getValue().agregarConexion(conexion)){
             throw new EntradaException("Ya existe una conexion entre ambas bibliotecas");
         }
+    }
+
+    private void limpiarCampos() {
+        costo.getValueFactory().setValue(VarGlobales.PRECIO_DEFAULT);
+        tiempo.getValueFactory().setValue(VarGlobales.TIEMPO_DEFAULT);
     }
     
 }
