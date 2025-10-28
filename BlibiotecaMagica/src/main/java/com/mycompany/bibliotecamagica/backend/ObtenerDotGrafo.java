@@ -8,7 +8,7 @@ import com.mycompany.bibliotecamagica.backend.estructuras.grafo.NodoGrafo;
 import com.mycompany.bibliotecamagica.backend.estructuras.lista_doble.ListaDoble;
 import com.mycompany.bibliotecamagica.backend.iterador.IteradorLista;
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
-import com.mycompany.bibliotecamagica.backend.modelos.Conexion;
+import com.mycompany.bibliotecamagica.backend.estructuras.grafo.Conexion;
 
 /**
  *
@@ -74,7 +74,7 @@ public class ObtenerDotGrafo {
             StringBuilder conexionesGrafo = new StringBuilder();
             while(conexiones.haySiguiente()){
                 Conexion c = conexiones.getActual();
-                Biblioteca bConexion = c.getBiblioAdyascente();
+                Biblioteca bConexion = c.getBiblioAdyascente().getBiblioteca();
                 if(primero == null) primero = bConexion.getIDNumerico();
                 infoConexiones.append(id).append(bConexion.getIDNumerico())
                         .append(" [label=\"").append("ID: ").append(bConexion.getId()).append("\\n")

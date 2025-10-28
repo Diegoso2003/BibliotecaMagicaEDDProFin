@@ -10,7 +10,7 @@ import com.mycompany.bibliotecamagica.backend.estructuras.grafo.NodoGrafo;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 import com.mycompany.bibliotecamagica.backend.iterador.IteradorLista;
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
-import com.mycompany.bibliotecamagica.backend.modelos.Conexion;
+import com.mycompany.bibliotecamagica.backend.estructuras.grafo.Conexion;
 import com.mycompany.bibliotecamagica.frontend.Auxiliar;
 import java.math.BigDecimal;
 import java.net.URL;
@@ -30,7 +30,7 @@ import javafx.scene.control.Spinner;
  */
 public class FormConexionController implements Initializable {
     @FXML private ComboBox<NodoGrafo> bibliotecaOrigen;
-    @FXML private ComboBox<Biblioteca> bibliotecaDestino;
+    @FXML private ComboBox<NodoGrafo> bibliotecaDestino;
     @FXML private Spinner<Integer> tiempo;
     @FXML private Spinner<BigDecimal> costo;
     /**
@@ -39,11 +39,11 @@ public class FormConexionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList<NodoGrafo> lista1 = FXCollections.observableArrayList();
-        ObservableList<Biblioteca> lista2 = FXCollections.observableArrayList();
+        ObservableList<NodoGrafo> lista2 = FXCollections.observableArrayList();
         IteradorLista<NodoGrafo> iterador = RedBibliotecas.INSTANCIA.getBibliotecas().getIterador();
         while(iterador.haySiguiente()){
             lista1.add(iterador.getActual());
-            lista2.add(iterador.getActual().getBiblioteca());
+            lista2.add(iterador.getActual());
         }
         bibliotecaOrigen.setItems(lista1);
         bibliotecaDestino.setItems(lista2);
@@ -69,7 +69,7 @@ public class FormConexionController implements Initializable {
             throw new EntradaException("Llenar correctamente todos los campos");
         }
         NodoGrafo origen = bibliotecaOrigen.getValue();
-        Biblioteca destino = bibliotecaDestino.getValue();
+        NodoGrafo destino = bibliotecaDestino.getValue();
         if(origen.getBiblioteca().equals(destino)){
             throw new EntradaException("Una biblioteca no puede conectarse con sigo misma.");
         }

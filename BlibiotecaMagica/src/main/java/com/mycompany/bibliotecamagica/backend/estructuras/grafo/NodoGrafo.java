@@ -6,7 +6,6 @@ package com.mycompany.bibliotecamagica.backend.estructuras.grafo;
 
 import com.mycompany.bibliotecamagica.backend.estructuras.lista_doble.ListaDoble;
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
-import com.mycompany.bibliotecamagica.backend.modelos.Conexion;
 
 /**
  *

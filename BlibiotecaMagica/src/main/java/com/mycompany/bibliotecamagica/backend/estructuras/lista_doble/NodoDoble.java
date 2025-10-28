@@ -10,7 +10,7 @@ import com.mycompany.bibliotecamagica.backend.estructuras.lista_simple.NodoSimpl
  *
  * @author rafael-cayax
  */
-public class NodoDoble<T> extends NodoSimple<T> implements Comparable<NodoSimple<T>>{
+public class NodoDoble<T extends Comparable> extends NodoSimple<T> implements Comparable<NodoSimple<T>>{
     private NodoDoble<T> anterior;
     
     public NodoDoble(T elemento) {
@@ -32,11 +32,7 @@ public class NodoDoble<T> extends NodoSimple<T> implements Comparable<NodoSimple
 
     @Override
     public int compareTo(NodoSimple<T> o) {
-        if(o.getElemento() instanceof Comparable otro){
-            Comparable actual = (Comparable)elemento;
-            return actual.compareTo(otro);
-        }
-        return -1;
+        return elemento.compareTo(o.getElemento());
     }
 
 }

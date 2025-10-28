@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.bibliotecamagica.backend.modelos;
+package com.mycompany.bibliotecamagica.backend.estructuras.grafo;
 
 import java.math.BigDecimal;
 
@@ -11,15 +11,15 @@ import java.math.BigDecimal;
  * @author rafael-cayax
  */
 public class Conexion implements Comparable<Conexion>{
-    private Biblioteca biblioAdyascente;
+    private NodoGrafo biblioAdyascente;
     private long tiempo;
     private BigDecimal precio;
 
-    public Biblioteca getBiblioAdyascente() {
+    public NodoGrafo getBiblioAdyascente() {
         return biblioAdyascente;
     }
 
-    public void setBiblioAdyascente(Biblioteca biblioAdyascente) {
+    public void setBiblioAdyascente(NodoGrafo biblioAdyascente) {
         this.biblioAdyascente = biblioAdyascente;
     }
 

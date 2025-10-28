@@ -11,7 +11,7 @@ import java.util.Optional;
  *
  * @author rafael-cayax
  */
-public class ListaDoble<T> extends ListaSimple<T>{
+public class ListaDoble<T extends Comparable> extends ListaSimple<T>{
     
     @Override
     public boolean agregar(T elemento){

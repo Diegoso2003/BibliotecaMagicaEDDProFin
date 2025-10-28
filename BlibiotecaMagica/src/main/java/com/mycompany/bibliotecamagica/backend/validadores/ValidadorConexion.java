@@ -5,9 +5,10 @@
 package com.mycompany.bibliotecamagica.backend.validadores;
 
 import com.mycompany.bibliotecamagica.backend.RedBibliotecas;
+import com.mycompany.bibliotecamagica.backend.VarGlobales;
 import com.mycompany.bibliotecamagica.backend.estructuras.grafo.NodoGrafo;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
-import com.mycompany.bibliotecamagica.backend.modelos.Conexion;
+import com.mycompany.bibliotecamagica.backend.estructuras.grafo.Conexion;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -59,7 +60,7 @@ public class ValidadorConexion extends Validador<Conexion>{
 
     @Override
     protected void agregarRegistro(Conexion nuevo) throws EntradaException {
-        nuevo.setBiblioAdyascente(obtenerNodoGrafo(destino.toString()).getBiblioteca());
+        nuevo.setBiblioAdyascente(obtenerNodoGrafo(destino.toString()));
         NodoGrafo nodoOrigen = obtenerNodoGrafo(origen.toString());
         if(!nodoOrigen.agregarConexion(nuevo)){
             throw new EntradaException("Ya existe una conexion entre ambas bibliotecas.");
@@ -68,8 +69,13 @@ public class ValidadorConexion extends Validador<Conexion>{
     
     public BigDecimal obtenerPrecio(String costo) throws EntradaException{
         try {
-            if(costo.charAt(0) == '0' || costo.charAt(0) == '-') throw new NumberFormatException();
-            return new BigDecimal(costo).setScale(2, RoundingMode.HALF_UP);
+            if(costo.charAt(0) == '0') throw new NumberFormatException();
+            BigDecimal precio = new BigDecimal(costo).setScale(2, RoundingMode.HALF_UP);
+            if(precio.compareTo(VarGlobales.MIN_PRECIO) < 0 || precio.compareTo(VarGlobales.MAX_PRECIO) > 0){
+                throw new EntradaException("El precio debe estar en un rango de Q" + VarGlobales.MIN_PRECIO + " a Q"
+                        + VarGlobales.MAX_PRECIO + " precio ingresado: Q" + precio);
+            }
+            return precio;
         } catch (NumberFormatException e){
             throw new EntradaException("Precio no valido: \"" + costo + "\"");
         }
