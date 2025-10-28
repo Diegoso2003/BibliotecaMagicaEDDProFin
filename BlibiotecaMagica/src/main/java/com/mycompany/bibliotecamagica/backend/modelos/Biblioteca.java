@@ -4,6 +4,8 @@
  */
 package com.mycompany.bibliotecamagica.backend.modelos;
 
+import java.util.Objects;
+
 /**
  *
  * @author rafael-cayax
@@ -81,6 +83,28 @@ public class Biblioteca implements Comparable<Biblioteca>{
     @Override
     public String toString() {
         return nombre + " (" + id + ")";
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Biblioteca other = (Biblioteca) obj;
+        return Objects.equals(this.id, other.id);
     }
     
 }
