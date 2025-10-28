@@ -50,9 +50,8 @@ public class ValidadorBiblioteca extends Validador<Biblioteca>{
 
     @Override
     protected Biblioteca validarYObtenerRegistro() throws EntradaException {
-        Biblioteca biblioteca = new Biblioteca();
         validarIDBiblio(id);
-        biblioteca.setId(id.toString());
+        Biblioteca biblioteca = new Biblioteca(id.toString());
         biblioteca.setNombre(nombre.toString());
         biblioteca.setUbicacion(ubicacion.toString());
         biblioteca.settIngreso(obtenerTiempo(ingreso.toString()));

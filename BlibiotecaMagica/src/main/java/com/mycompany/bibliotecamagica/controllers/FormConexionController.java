@@ -9,7 +9,6 @@ import com.mycompany.bibliotecamagica.backend.VarGlobales;
 import com.mycompany.bibliotecamagica.backend.estructuras.grafo.NodoGrafo;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 import com.mycompany.bibliotecamagica.backend.iterador.IteradorLista;
-import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
 import com.mycompany.bibliotecamagica.backend.estructuras.grafo.Conexion;
 import com.mycompany.bibliotecamagica.frontend.Auxiliar;
 import java.math.BigDecimal;
@@ -70,7 +69,7 @@ public class FormConexionController implements Initializable {
         }
         NodoGrafo origen = bibliotecaOrigen.getValue();
         NodoGrafo destino = bibliotecaDestino.getValue();
-        if(origen.getBiblioteca().equals(destino)){
+        if(origen.equals(destino)){
             throw new EntradaException("Una biblioteca no puede conectarse con sigo misma.");
         }
     }

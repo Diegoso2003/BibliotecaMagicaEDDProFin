@@ -11,12 +11,16 @@ import java.util.Objects;
  * @author rafael-cayax
  */
 public class Biblioteca implements Comparable<Biblioteca>{
-    private String id;
+    private final String id;
     private String nombre;
     private String ubicacion;
     private long tIngreso;
     private long tTraspaso;
     private long dIntervalo;
+
+    public Biblioteca(String id) {
+        this.id = id;
+    }
 
     public String getId() {
         return id;
@@ -29,10 +33,6 @@ public class Biblioteca implements Comparable<Biblioteca>{
             if(c != '-') aux.append(c);
         }
         return aux.toString();
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getNombre() {
