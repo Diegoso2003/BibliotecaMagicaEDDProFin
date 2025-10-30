@@ -47,4 +47,17 @@ public class ListaSimple<T> {
         return numElementos;
     }
     
+    public void limpiar(){
+        numElementos = 0;
+        primero = null;
+        ultimo = null;
+    }
+    
+    public T eliminarPrimero(){
+        if(estaVacia()) return null;
+        T dato = primero.getElemento();
+        primero = primero.getSiguiente();
+        numElementos--;
+        return dato;
+    }
 }

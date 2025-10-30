@@ -8,15 +8,15 @@ package com.mycompany.bibliotecamagica.backend.modelos;
  *
  * @author rafael-cayax
  */
-public class Libro {
-    private final String Isbn;
+public class Libro implements Comparable<Libro>{
+    private final String isbn;
     private String titulo;
     private String genero;
     private String autor;
-    private int año;
+    private Integer año;
 
     public Libro(String Isbn) {
-        this.Isbn = Isbn;
+        this.isbn = Isbn;
     }
 
     public String getTitulo() {
@@ -43,7 +43,7 @@ public class Libro {
         this.autor = autor;
     }
 
-    public int getAño() {
+    public Integer getAño() {
         return año;
     }
 
@@ -52,12 +52,12 @@ public class Libro {
     }
 
     public String getIsbn() {
-        return Isbn;
+        return isbn;
     }
     
     public String getSinGuiones(){
         StringBuilder st = new StringBuilder();
-        for(int i = 0; i < Isbn.length(); i++){
+        for(int i = 0; i < isbn.length(); i++){
             if(st.charAt(i) != '-'){
                 st.append(st.charAt(i));
             }
@@ -68,6 +68,11 @@ public class Libro {
     @Override
     public String toString() {
         return getSinGuiones();
+    }
+
+    @Override
+    public int compareTo(Libro o) {
+        return isbn.compareTo(o.isbn);
     }
     
 }

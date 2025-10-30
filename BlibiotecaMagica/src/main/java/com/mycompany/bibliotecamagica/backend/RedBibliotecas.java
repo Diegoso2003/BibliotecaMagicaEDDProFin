@@ -4,6 +4,8 @@
  */
 package com.mycompany.bibliotecamagica.backend;
 
+import com.mycompany.bibliotecamagica.backend.calculo_ruta.Dijsktra;
+import com.mycompany.bibliotecamagica.backend.calculo_ruta.InfoTraslado;
 import com.mycompany.bibliotecamagica.backend.estructuras.grafo.NodoGrafo;
 import com.mycompany.bibliotecamagica.backend.estructuras.lista_doble.ListaDoble;
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
@@ -17,9 +19,13 @@ public enum RedBibliotecas {
     INSTANCIA;
     
     private final ListaDoble<NodoGrafo> bibliotecas;
+    private final ListaDoble<InfoTraslado> traslados;
+    private final Dijsktra d;
 
     private RedBibliotecas() {
         bibliotecas = new ListaDoble<>();
+        traslados = new ListaDoble<>();
+        d = new Dijsktra();
     }
     
     public boolean agregar(Biblioteca nueva){
@@ -28,19 +34,26 @@ public enum RedBibliotecas {
     }
     
     public Optional<NodoGrafo> buscar(String origen){
-        Biblioteca biblioTemporal = new Biblioteca();
-        biblioTemporal.setId(origen);
+        Biblioteca biblioTemporal = new Biblioteca(origen);
         NodoGrafo nodoTemporal = new NodoGrafo(biblioTemporal);
         return bibliotecas.buscar(nodoTemporal);
-    }
-
-    public ListaDoble<NodoGrafo> getBibliotecas() {
-        return bibliotecas;
     }
     
     public String obtenerDot(){
         ObtenerDotGrafo g = new ObtenerDotGrafo(bibliotecas);
         return g.obtenerDotGrafo();
     }
+    
+    public ListaDoble<NodoGrafo> getBibliotecas() {
+        return bibliotecas;
+    }
 
+    public ListaDoble<InfoTraslado> getTraslados() {
+        return traslados;
+    }
+
+    public Dijsktra getD() {
+        return d;
+    }
+    
 }
