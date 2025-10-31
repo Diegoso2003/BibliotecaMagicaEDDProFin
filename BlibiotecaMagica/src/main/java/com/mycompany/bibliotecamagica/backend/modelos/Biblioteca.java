@@ -4,6 +4,7 @@
  */
 package com.mycompany.bibliotecamagica.backend.modelos;
 
+import com.mycompany.bibliotecamagica.frontend.BibliotecaFrontend;
 import java.util.Objects;
 
 /**
@@ -12,14 +13,26 @@ import java.util.Objects;
  */
 public class Biblioteca implements Comparable<Biblioteca>{
     private final String id;
+    private final BibliotecaFrontend biblioColas;
     private String nombre;
     private String ubicacion;
     private long tIngreso;
     private long tTraspaso;
     private long dIntervalo;
 
-    public Biblioteca(String id) {
+    public Biblioteca(String id, String nombre) {
         this.id = id;
+        this.nombre = nombre;
+        biblioColas = new BibliotecaFrontend(this);
+    }
+    
+    /**
+     * constructor hecho solo para busquedas
+     * @param id 
+     */
+    public Biblioteca(String id){
+        this.id = id;
+        biblioColas = null;
     }
 
     public String getId() {
@@ -73,6 +86,10 @@ public class Biblioteca implements Comparable<Biblioteca>{
 
     public void setdIntervalo(long dIntervalo) {
         this.dIntervalo = dIntervalo;
+    }
+
+    public BibliotecaFrontend getBiblioColas() {
+        return biblioColas;
     }
 
     @Override

@@ -31,6 +31,7 @@
                         <MenuButton text="Bibliotecas">
                             <items>
                                 <MenuItem text="Agregar biblioteca" onAction="#cargarFormBiblioteca" />
+                                <MenuItem text="Visualizar colas de despacho" onAction="#cargarColas"/>
                                 <MenuItem text="Eliminar biblioteca"/>
                             </items>
                         </MenuButton>

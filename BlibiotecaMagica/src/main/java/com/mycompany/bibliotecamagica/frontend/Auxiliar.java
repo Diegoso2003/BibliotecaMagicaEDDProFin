@@ -6,10 +6,8 @@ package com.mycompany.bibliotecamagica.frontend;
 
 import com.mycompany.bibliotecamagica.backend.VarGlobales;
 import java.math.BigDecimal;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableCell;

@@ -13,7 +13,6 @@
     -fx-font-family: "Inter";
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-alignment: CENTER;
     -fx-border-color: #6a8c7a;
     -fx-border-width: 0 1 1 0;
 }
@@ -37,10 +36,6 @@
     -fx-border-color: #2f5b56;
     -fx-border-width: 1 1 1 1;
     -fx-padding: 8;
-}
-
-.table-view .table-cell .text {
-    -fx-text-alignment: center;
 }
 
 .table-row-cell {

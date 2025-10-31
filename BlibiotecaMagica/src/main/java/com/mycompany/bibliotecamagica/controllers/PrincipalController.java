@@ -71,4 +71,9 @@ public class PrincipalController implements Initializable {
     private void cargarRegistrosTraslados(){
         cargarVista(VistasEnum.REGISTRO_TRASLADO);
     }
+    
+    @FXML
+    private void cargarColas(){
+        cargarVista(VistasEnum.COLAS_DESPACHO);
+    }
 }

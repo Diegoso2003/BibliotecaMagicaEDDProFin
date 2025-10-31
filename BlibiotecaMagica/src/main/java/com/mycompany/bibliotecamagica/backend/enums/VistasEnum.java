@@ -10,6 +10,7 @@ package com.mycompany.bibliotecamagica.backend.enums;
  */
 public enum VistasEnum {
     CARGAR_ARCHIVO("carga_archivo"),
+    COLAS_DESPACHO("colas_despacho"),
     FORM_BIBLIOTECA("form_biblioteca"),
     FORM_CONEXION("form_conexion"),
     REGISTRO_TRASLADO("registro_traslado"),
