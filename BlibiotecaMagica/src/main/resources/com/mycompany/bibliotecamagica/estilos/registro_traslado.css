@@ -63,8 +63,8 @@
 }
 
 .table-row-cell:selected .table-cell {
-    -fx-background-color: #6a8c7a;
-    -fx-text-fill: white;
+    -fx-background-color: #81c8a2;
+    -fx-text-fill: #22342f;
 }
 
 .table-row-cell:hover {

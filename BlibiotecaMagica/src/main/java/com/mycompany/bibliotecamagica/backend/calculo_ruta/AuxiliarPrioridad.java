@@ -30,7 +30,7 @@ public class AuxiliarPrioridad implements Comparable<AuxiliarPrioridad>{
         if(prioridad == PrioridadEnum.TIEMPO){
             return tiempo.compareTo(o.tiempo);
         } else {
-            return costo.compareTo(costo);
+            return costo.compareTo(o.costo);
         }
     }
 
