@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane styleClass="principal" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.bibliotecamagica.controllers.RegistroTrasladoController">
+   <center>
+      <TableView fx:id="registros" prefHeight="400.0" prefWidth="600.0" stylesheets="@estilos/registro_traslado.css" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="isbn" editable="false" prefWidth="75.0" sortable="false" text="ISBN libro" />
+          <TableColumn fx:id="ruta" editable="false" prefWidth="75.0" sortable="false" text="Ruta" />
+            <TableColumn fx:id="tiempo" editable="false" prefWidth="75.0" sortable="false" text="Tiempo" />
+            <TableColumn fx:id="costo" editable="false" prefWidth="75.0" sortable="false" text="Costo" />
+            <TableColumn fx:id="prioridad" editable="false" prefWidth="75.0" sortable="false" text="Prioridad" />
+        </columns>
+      </TableView>
+   </center>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+</BorderPane>

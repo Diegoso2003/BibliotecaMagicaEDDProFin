@@ -7,10 +7,10 @@ package com.mycompany.bibliotecamagica.backend.calculo_ruta;
 import com.mycompany.bibliotecamagica.backend.RedBibliotecas;
 import com.mycompany.bibliotecamagica.backend.enums.PrioridadEnum;
 import com.mycompany.bibliotecamagica.backend.estructuras.Pila;
+import com.mycompany.bibliotecamagica.backend.estructuras.cola.Cola;
 import com.mycompany.bibliotecamagica.backend.estructuras.grafo.Conexion;
 import com.mycompany.bibliotecamagica.backend.estructuras.grafo.NodoGrafo;
 import com.mycompany.bibliotecamagica.backend.estructuras.lista_doble.ListaDoble;
-import com.mycompany.bibliotecamagica.backend.estructuras.lista_simple.ListaSimple;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 import com.mycompany.bibliotecamagica.backend.iterador.IteradorLista;
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
@@ -38,7 +38,7 @@ public class Dijsktra {
         bibliotecasVisitadas = new HashMap<>();
     }
 
-    public InfoTraslado calcularRuta(String idOrigen, String idDestino, Libro libro, PrioridadEnum prioridad) throws EntradaException{
+    public Cola<Biblioteca> calcularRuta(String idOrigen, String idDestino, Libro libro, PrioridadEnum prioridad) throws EntradaException{
         limpiarVariables();
         this.prioridad = prioridad;
         NodoGrafo origen = RedBibliotecas.INSTANCIA.buscar(idOrigen).orElseThrow(() -> 
@@ -48,8 +48,7 @@ public class Dijsktra {
         return iniciarAnalisis(origen, destino, libro);
     }
 
-    public InfoTraslado iniciarAnalisis(NodoGrafo origen, NodoGrafo destino, Libro libro) throws EntradaException {
-        validarLibro(destino, libro);
+    public Cola<Biblioteca> iniciarAnalisis(NodoGrafo origen, NodoGrafo destino, Libro libro) throws EntradaException {
         colaDePrioridad.agregar(new AuxiliarPrioridad(prioridad, origen, Long.valueOf(0), new BigDecimal(0)));
         padres.put(origen.getBiblioteca(), null);
         while(!colaDePrioridad.estaVacia()){
@@ -57,7 +56,7 @@ public class Dijsktra {
             NodoGrafo actual = aux.getNodo();
             if(!esBibliotecaYaVisitada(actual)){
                 if(actual.equals(destino)){
-                    return resultado(libro, origen, destino);
+                    return resultado(libro, destino);
                 }
                 ListaDoble<Conexion> conexiones = actual.getConexiones();
                 IteradorLista<Conexion> iterador = conexiones.getIterador();
@@ -79,10 +78,6 @@ public class Dijsktra {
         padres.clear();
         bibliotecasVisitadas.clear();
         colaDePrioridad.limpiar();
-    }
-
-    private void validarLibro(NodoGrafo destino, Libro libro) {
-        //metodo para validar que la biblioteca destino sea donde esta el libro
     }
 
     private boolean esBibliotecaYaVisitada(NodoGrafo actual) {
@@ -115,7 +110,7 @@ public class Dijsktra {
         }
     }
 
-    private InfoTraslado resultado(Libro libro, NodoGrafo origen, NodoGrafo destino) {
+    private Cola<Biblioteca> resultado(Libro libro, NodoGrafo destino) {
         Pila<Biblioteca> pila = new Pila<>();
         Biblioteca d = destino.getBiblioteca();
         Long tiempo = tiempos.get(d);
@@ -124,11 +119,18 @@ public class Dijsktra {
             pila.apilar(d);
             d = padres.get(d);
         } while(d != null);
-        ListaSimple<Biblioteca> bibliotecas = new ListaSimple<>();
+        Cola<Biblioteca> cola = new Cola<>();
+        StringBuilder ruta = new StringBuilder();
         while(!pila.estaVacia()){
-            bibliotecas.agregar(pila.desapilar());
+            Biblioteca biblioteca = pila.desapilar();
+            cola.agregar(biblioteca);
+            if(!ruta.isEmpty()){
+                ruta.append(" -> ");
+            }
+            ruta.append(biblioteca.getId());
         }
-        return new InfoTraslado(libro, costo, tiempo, bibliotecas);
+        RedBibliotecas.INSTANCIA.getTraslados().agregar(new InfoTraslado(libro, costo, tiempo, ruta.toString(), prioridad));
+        return cola;
     }
     
 }

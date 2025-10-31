@@ -6,12 +6,17 @@ package com.mycompany.bibliotecamagica.frontend;
 
 import com.mycompany.bibliotecamagica.backend.VarGlobales;
 import java.math.BigDecimal;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -78,5 +83,42 @@ public class Auxiliar {
         alerta.initOwner((Stage) nodo.getScene().getWindow());
         alerta.initModality(Modality.WINDOW_MODAL);
         alerta.showAndWait();
+    }
+    
+    public static <S, T> void configurarSaltoDeLinea(TableColumn<S, T> columna) {
+         columna.setCellFactory(col -> {
+        return new TableCell<S, T>() {
+            private Text text = new Text();
+            
+            {
+                text.setWrappingWidth(0);
+                text.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+                setGraphic(text);
+                setText(null);
+            }
+            
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                
+                if (empty || item == null) {
+                    text.setText(null);
+                    setGraphic(null);
+                } else {
+                    text.setText(item.toString());
+                    setGraphic(text);
+                }
+            }
+            
+            @Override
+            protected void layoutChildren() {
+                super.layoutChildren();
+                double width = getWidth() - 16;
+                if (width > 0) {
+                    text.setWrappingWidth(width);
+                }
+            }
+        };
+    });
     }
 }

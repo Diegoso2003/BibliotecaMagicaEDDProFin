@@ -4,15 +4,22 @@
  */
 package com.mycompany.bibliotecamagica.backend.validadores;
 
+import com.mycompany.bibliotecamagica.backend.RedBibliotecas;
 import com.mycompany.bibliotecamagica.backend.VarGlobales;
+import com.mycompany.bibliotecamagica.backend.enums.EstadoLibroEnum;
+import com.mycompany.bibliotecamagica.backend.enums.PrioridadEnum;
+import com.mycompany.bibliotecamagica.backend.estructuras.cola.Cola;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
-import com.mycompany.bibliotecamagica.backend.modelos.EntradaLibro;
+import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
+import com.mycompany.bibliotecamagica.backend.modelos.InfoLibro;
+import com.mycompany.bibliotecamagica.backend.modelos.Libro;
+import java.util.Optional;
 
 /**
  *
  * @author rafael-cayax
  */
-public class ValidadorLibro extends Validador<EntradaLibro>{
+public class ValidadorLibro extends Validador<InfoLibro>{
     private StringBuilder titulo;
     private StringBuilder isbn;
     private StringBuilder genero;
@@ -22,6 +29,7 @@ public class ValidadorLibro extends Validador<EntradaLibro>{
     private StringBuilder origen;
     private StringBuilder destino;
     private StringBuilder prioridad;
+    private PrioridadEnum actual;
 
     @Override
     protected void extraerDatos() throws EntradaException {
@@ -31,7 +39,6 @@ public class ValidadorLibro extends Validador<EntradaLibro>{
         inicio = buscarCampo(año, inicio, false);
         inicio = buscarCampo(autor, inicio, false);
         inicio = buscarCampo(estado, inicio, false);
-        inicio = buscarCampo(origen, inicio, false);
         inicio = buscarCampo(origen, inicio, false);
         inicio = buscarCampo(destino, inicio, false);
         inicio = buscarCampo(prioridad, inicio, true);
@@ -59,21 +66,24 @@ public class ValidadorLibro extends Validador<EntradaLibro>{
     }
 
     @Override
-    protected EntradaLibro validarYObtenerRegistro() throws EntradaException {
+    protected InfoLibro validarYObtenerRegistro() throws EntradaException {
         if(!esIsbnValido()) throw new EntradaException("isbn invalido: \"" + isbn + "\"");
-        int añoLibro = obtenerAño();
-        validarIDBiblio(origen);
-        validarIDBiblio(destino);
-        return new EntradaLibro();
+        Libro libro = obtenerLibro();
+        Optional<PrioridadEnum> prioridad2 = PrioridadEnum.obtenerPrioridad(prioridad.toString());
+        actual = prioridad2.orElseThrow(() -> new EntradaException("Prioridad ingresada invalida: \"" + prioridad + "\""));
+        InfoLibro info = new InfoLibro(libro ,
+        EstadoLibroEnum.obtenerEstado(estado.toString()).orElseThrow(() -> new EntradaException("Estado de libro no valido")));
+        return info;
     }
 
     @Override
-    protected void agregarRegistro(EntradaLibro nuevo) {
-        
+    protected void agregarRegistro(InfoLibro nuevo) throws EntradaException {
+        Cola<Biblioteca> ruta = RedBibliotecas.INSTANCIA.getD().
+                calcularRuta(origen.toString(), destino.toString(), nuevo.getLibro(), actual);
     }
     
     private boolean esIsbnValido(){
-        if(isbn.length() < 13 || !isbn.subSequence(0, 3).equals("978") || !isbn.subSequence(0, 3).equals("979")){
+        if(isbn.length() < 13 || (!isbn.subSequence(0, 3).equals("978") && !isbn.subSequence(0, 3).equals("979"))){
             return false;
         }
         int contador = 3;
@@ -98,5 +108,23 @@ public class ValidadorLibro extends Validador<EntradaLibro>{
         } catch(NumberFormatException e){
             throw new EntradaException("Año ingresado invalido: \"" + año + "\"");
         }
+    }
+
+    private void validarLibro() {
+        //metodo para buscar en el catalogo de libros para verificar que el libro tengo un isbn
+        //que corresponda a los datos que tiene
+    }
+
+    private Libro obtenerLibro() throws EntradaException {
+        //agregar logica para buscar el libro y validad que tenga los mismos datos si no existe crear otro
+        validarLibro();
+        Libro libro = new Libro(isbn.toString());
+        libro.setAutor(autor.toString());
+        libro.setAño(obtenerAño());
+        libro.setGenero(genero.toString());
+        libro.setTitulo(titulo.toString());
+        validarIDBiblio(origen);
+        validarIDBiblio(destino);
+        return libro;
     }
 }

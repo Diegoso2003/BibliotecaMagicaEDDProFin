@@ -42,7 +42,8 @@ public class PrincipalController implements Initializable {
             principal.setCenter(null);
             principal.setCenter(vista);
         } catch(IOException e){
-            e.printStackTrace();
+            System.out.println(e);
+            //e.printStackTrace();
         }
     }
     
@@ -66,4 +67,8 @@ public class PrincipalController implements Initializable {
         cargarVista(VistasEnum.FORM_CONEXION);
     }
     
+    @FXML
+    private void cargarRegistrosTraslados(){
+        cargarVista(VistasEnum.REGISTRO_TRASLADO);
+    }
 }

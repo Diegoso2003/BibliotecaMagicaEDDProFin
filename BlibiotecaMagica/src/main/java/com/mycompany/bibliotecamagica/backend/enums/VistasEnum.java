@@ -12,6 +12,7 @@ public enum VistasEnum {
     CARGAR_ARCHIVO("carga_archivo"),
     FORM_BIBLIOTECA("form_biblioteca"),
     FORM_CONEXION("form_conexion"),
+    REGISTRO_TRASLADO("registro_traslado"),
     GRAFICA_GRAFO("grafica_grafo");
     
     private final String ventana;

@@ -8,26 +8,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.Group?>
 
 <BorderPane fx:id="principal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="562.0" prefWidth="644.0" stylesheets="@estilos/principal.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.bibliotecamagica.controllers.PrincipalController">
     <left>
-        <VBox alignment="TOP_CENTER" prefHeight="562.0" prefWidth="247.0" styleClass="nav-bar" BorderPane.alignment="CENTER">
-            <opaqueInsets>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </opaqueInsets>
+        <VBox alignment="TOP_LEFT" prefHeight="562.0" prefWidth="257.0" styleClass="nav-bar" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
             <children>
                 <HBox alignment="CENTER" prefHeight="38.0" prefWidth="140.0">
                     <children>
-                        <Label styleClass="titulo" alignment="CENTER" contentDisplay="CENTER" text="Biblioteca Magica" textAlignment="CENTER" textFill="WHITE">
-                            <font>
-                                <Font size="38.0" />
-                            </font>
-                        </Label>
+                        <Label styleClass="titulo" alignment="CENTER" contentDisplay="CENTER" text="Biblioteca Magica" textAlignment="CENTER" textFill="WHITE"/>
                     </children>
                 </HBox>
-                <HBox alignment="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="nav-item">
+                <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="140.0" styleClass="nav-item">
                     <children>
                         <Group>
                             <SVGPath content="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5z" fill="WHITE" />
@@ -41,7 +36,7 @@
                         </MenuButton>
                     </children>
                 </HBox>
-                <HBox alignment="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="nav-item">
+                <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="140.0" styleClass="nav-item">
                     <children>
                         <SVGPath content="M14.3335126,2.85206923 L19.0436746,5.57156232 C19.1861408,5.42269933 19.3517561,5.29107777 19.5390336,5.18229987 C20.6054985,4.56924218 21.9657203,4.93324518 22.585164,5.99971013 C23.1982217,7.06617507 22.8342187,8.42639682 21.7677537,9.04584053 C21.5354003,9.17940894 21.2887997,9.26659782 21.038849,9.31024708 L21.038849,14.6900096 C21.2856344,14.7341019 21.5290274,14.8207365 21.7585099,14.9526546 C22.8303433,15.5715108 23.1940011,16.9304425 22.5751449,17.9958959 C21.9626686,19.0613494 20.597357,19.4250072 19.5319036,18.8125309 C19.2675499,18.6605671 19.046399,18.4622584 18.8726413,18.2336837 L14.2472483,20.9042339 C14.359389,21.1704807 14.4213527,21.4632106 14.4213527,21.770637 C14.4213527,22.997106 13.4248466,24 12.1919896,24 C10.9591327,24 9.96262662,23.0034939 9.96262662,21.770637 C9.96262662,21.5276826 10.001326,21.293907 10.0729072,21.0751276 L5.39448212,18.3739583 C5.24136397,18.5447862 5.05910975,18.6948998 4.84979559,18.8164775 C3.77694463,19.4295352 2.41672287,19.0655322 1.80366518,17.9990673 C1.19060749,16.9326023 1.55461049,15.5723806 2.62107544,14.9529369 C2.78345801,14.8595912 2.95265101,14.7888975 3.12500248,14.7398866 L3.12500248,9.26050018 C2.95045269,9.21143227 2.77917162,9.14021295 2.61500295,9.04584053 C1.548538,8.43278284 1.184535,7.06617507 1.79759269,5.99971013 C2.41065038,4.93324518 3.77725815,4.56924218 4.8437231,5.18229987 C4.99574654,5.27060092 5.13349582,5.37395472 5.25617553,5.48936462 L10.0208088,2.73842163 C9.98274768,2.57496174 9.96262662,2.40454853 9.96262662,2.22936302 C9.96262662,0.996506107 10.9591327,4.6629367e-14 12.1919896,4.6629367e-14 C13.4248466,4.6629367e-14 14.4213527,0.996506107 14.4213527,2.22936302 C14.4213527,2.44556708 14.3907061,2.6545024 14.3335126,2.85206923 Z M13.8405544,3.73141097 C13.7908242,3.78597435 13.7384158,3.8380524 13.6835353,3.88743909 L19.9624322,14.7624885 C19.9851165,14.7552188 20.0079142,14.7483109 20.0308156,14.7417672 L20.0308156,9.25474103 C19.4969015,9.10015188 19.0200076,8.74749468 18.7216233,8.22843028 C18.396599,7.66302338 18.3462063,7.01504748 18.5295247,6.43866863 L13.8405544,3.73141097 Z M10.5612952,3.75078761 C10.5290822,3.71626947 10.4979547,3.6807246 10.4679668,3.64420691 L5.81568405,6.33028239 C6.04182311,6.93281226 6.00669953,7.62728911 5.66113335,8.22843028 C5.32249418,8.81752134 4.75393127,9.19227671 4.13303588,9.30641503 L4.13303588,14.6916383 C4.16637437,14.6977154 4.19956458,14.7045461 4.23257942,14.7121233 L10.5612952,3.75078761 Z M12.8009687,4.3748119 C12.60746,4.42948073 12.403193,4.45872604 12.1919896,4.45872604 C11.9129003,4.45872604 11.645923,4.40765895 11.3998763,4.31434325 L5.14116232,15.1544358 C5.34676617,15.3211714 5.52618301,15.5275552 5.66720584,15.7703471 C5.76055152,15.9327297 5.83124515,16.1019227 5.8802561,16.2742741 L18.5020915,16.2742741 C18.5510684,16.101457 18.6218024,15.9318817 18.7152686,15.7692896 C18.8216025,15.5843129 18.950628,15.4204894 19.0968364,15.2792547 L12.8009687,4.3748119 Z M13.7498392,20.1747099 L18.4885766,17.4387184 C18.4752977,17.3870257 18.4638585,17.3348529 18.454287,17.2823075 L5.92850441,17.2823075 C5.91572246,17.3524283 5.89960649,17.4218931 5.88022341,17.4904498 L10.5957921,20.2130645 C11.0004395,19.7984186 11.5657199,19.541274 12.1919896,19.541274 C12.7987163,19.541274 13.3482006,19.7826203 13.7498392,20.1747099 Z" fill="WHITE" />
                         <MenuButton text="Conexiones">
@@ -53,14 +48,20 @@
                         </MenuButton>
                     </children>
                 </HBox>
-                <HBox alignment="CENTER" prefHeight="41.0" prefWidth="140.0" styleClass="nav-item">
+                <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="140.0" styleClass="nav-item">
                     <children>
                         <SVGPath content="M14 4.5V9h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v7H2V2a2 2 0 0 1 2-2h5.5zM13 12h1v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2h1v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1zM.5 10a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1z" fill="WHITE" />
-                        <Label onMouseClicked="#cargarArchivo" text="  Cargar archivo" textFill="WHITE" style="-fx-padding: 0 3 0 3;">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
+                        <Label onMouseClicked="#cargarArchivo" text="  Cargar archivo" textFill="WHITE" style="-fx-padding: 0 3 0 3;"/>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="140.0" styleClass="nav-item">
+                    <children>
+                        <Group>
+                            <SVGPath content="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zM7 9a1 1 0 0 1 2 0v3a1 1 0 1 1-2 0z" fill="WHITE" />
+                            <SVGPath content="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z" fill="WHITE" />
+                            <SVGPath content="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z" fill="WHITE" />
+                        </Group>
+                        <Label onMouseClicked="#cargarRegistrosTraslados" text="  Registros de traslados" textFill="WHITE" style="-fx-padding: 0 3 0 3;"/>
                     </children>
                 </HBox>
             </children>

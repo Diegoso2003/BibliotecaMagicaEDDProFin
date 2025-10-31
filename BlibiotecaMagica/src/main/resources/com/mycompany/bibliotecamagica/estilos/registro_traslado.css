@@ -1,0 +1,121 @@
+.table-view {
+    -fx-background-color: #2f5b56;
+    -fx-border-color: #6a8c7a;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
+}
+
+.table-view .column-header {
+    -fx-background-color: #5b5960;
+    -fx-text-fill: white;
+    -fx-font-family: "Inter";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+    -fx-border-color: #6a8c7a;
+    -fx-border-width: 0 1 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-family: "Inter";
+    -fx-font-weight: bold;
+}
+
+.table-view .filler {
+    -fx-background-color: #6a8c7a;
+}
+
+.table-view .table-cell {
+    -fx-background-color: #f3f7f4;
+    -fx-text-fill: #22342f;
+    -fx-font-family: "Inter";
+    -fx-font-size: 13px;
+    -fx-alignment: CENTER;
+    -fx-border-color: #2f5b56;
+    -fx-border-width: 1 1 1 1;
+    -fx-padding: 8;
+}
+
+.table-view .table-cell .text {
+    -fx-text-alignment: center;
+}
+
+.table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.table-row-cell:odd .table-cell {
+    -fx-background-color: #f7fbf8;
+}
+
+.table-row-cell:even .table-cell {
+    -fx-background-color: #edf6f1;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #6a8c7a;
+    -fx-border-color: #f05c54;
+    -fx-border-width: 2;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-background-color: #6a8c7a;
+    -fx-text-fill: white;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #e1efe9;
+    -fx-cursor: hand;
+}
+
+.table-row-cell:hover .table-cell {
+    -fx-background-color: #e1efe9;
+}
+
+.table-view .placeholder .label {
+    -fx-text-fill: #999999;
+    -fx-font-family: "Inter";
+    -fx-font-size: 14px;
+}
+
+.table-view .scroll-bar:vertical {
+    -fx-background-color: #5b5960;
+}
+
+.table-view .scroll-bar:vertical .track {
+    -fx-background-color: #5b5960;
+}
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #6a8c7a;
+    -fx-background-radius: 5;
+}
+
+.table-view .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #2f5b56;
+}
+
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: #5b5960;
+}
+
+.table-view .scroll-bar:horizontal .track {
+    -fx-background-color: #5b5960;
+}
+
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #6a8c7a;
+    -fx-background-radius: 5;
+}
+
+.table-view .scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: #2f5b56;
+}
+
+.table-view .corner {
+    -fx-background-color: #5b5960;
+}

@@ -64,14 +64,17 @@ public class LectorArchivo {
                 try{
                     validador.iniciarAnalisis(linea);
                 } catch (EntradaException e){
-                    hayError = true;
                     if(!error){
                         error = true;
+                        if(hayError){
+                            log.append("\n");
+                        }
                         log.append("Error en el archivo: ").append(archivo.getName());
                     }
                     log.append("\n\tError en la linea: ").append(contador).append("\n");
                     log.append("\t\t").append(e.getMessage()).append("\n");
                     log.append("\t\t").append(linea);
+                    hayError = true;
                 }
             }
         } catch (IOException e) {

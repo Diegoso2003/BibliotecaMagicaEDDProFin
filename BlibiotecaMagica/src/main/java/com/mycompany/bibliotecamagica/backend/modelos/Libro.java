@@ -58,8 +58,8 @@ public class Libro implements Comparable<Libro>{
     public String getSinGuiones(){
         StringBuilder st = new StringBuilder();
         for(int i = 0; i < isbn.length(); i++){
-            if(st.charAt(i) != '-'){
-                st.append(st.charAt(i));
+            if(isbn.charAt(i) != '-'){
+                st.append(isbn.charAt(i));
             }
         }
         return st.toString();

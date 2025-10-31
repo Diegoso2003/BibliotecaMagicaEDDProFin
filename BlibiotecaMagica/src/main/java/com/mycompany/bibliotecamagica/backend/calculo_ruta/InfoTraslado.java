@@ -4,8 +4,7 @@
  */
 package com.mycompany.bibliotecamagica.backend.calculo_ruta;
 
-import com.mycompany.bibliotecamagica.backend.estructuras.lista_simple.ListaSimple;
-import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
+import com.mycompany.bibliotecamagica.backend.enums.PrioridadEnum;
 import com.mycompany.bibliotecamagica.backend.modelos.Libro;
 import java.math.BigDecimal;
 
@@ -16,14 +15,21 @@ import java.math.BigDecimal;
 public class InfoTraslado implements Comparable<InfoTraslado>{
     private final Libro libro;
     private final BigDecimal costo;
-    private final long tiempo;
-    private final ListaSimple<Biblioteca> ruta;
+    private final Long tiempo;
+    private final String ruta;
+    private final PrioridadEnum prioridad;
 
-    public InfoTraslado(Libro libro, BigDecimal costo, long tiempo, ListaSimple<Biblioteca> ruta) {
+    public InfoTraslado(Libro libro, BigDecimal costo, long tiempo, String ruta, PrioridadEnum prioridad) {
         this.libro = libro;
         this.costo = costo;
         this.tiempo = tiempo;
         this.ruta = ruta;
+        this.prioridad = prioridad;
+    }
+
+    @Override
+    public int compareTo(InfoTraslado o) {
+        return libro.toString().compareTo(o.libro.toString());
     }
 
     public Libro getLibro() {
@@ -34,17 +40,16 @@ public class InfoTraslado implements Comparable<InfoTraslado>{
         return costo;
     }
 
-    public long getTiempo() {
+    public Long getTiempo() {
         return tiempo;
     }
 
-    public ListaSimple<Biblioteca> getRuta() {
+    public String getRuta() {
         return ruta;
     }
 
-    @Override
-    public int compareTo(InfoTraslado o) {
-        return libro.compareTo(o.libro);
+    public PrioridadEnum getPrioridad() {
+        return prioridad;
     }
-    
+
 }
