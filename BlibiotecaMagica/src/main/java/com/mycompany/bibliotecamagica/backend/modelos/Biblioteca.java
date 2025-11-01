@@ -85,12 +85,12 @@ public class Biblioteca implements Comparable<Biblioteca>{
         return tIngreso.estaVacia() || tTraspaso.estaVacia() || despacho.estaVacia();
     }
     
-    public void colocarEnEntrada(EntradaLibro libro){
+    public synchronized void colocarEnEntrada(EntradaLibro libro){
         tIngreso.encolar(libro);
         biblioColas.colocarEnEntrada(libro.getLibro().getLibro());
     }
     
-    public void colocarEnTraspaso(EntradaLibro libro){
+    public synchronized void colocarEnTraspaso(EntradaLibro libro){
         tTraspaso.encolar(libro);
         biblioColas.colocarEnTraspaso(libro.getLibro().getLibro());
     }

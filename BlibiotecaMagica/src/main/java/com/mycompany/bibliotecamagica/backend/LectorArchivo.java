@@ -67,7 +67,7 @@ public class LectorArchivo {
                     if(!error){
                         error = true;
                         if(hayError){
-                            log.append("\n");
+                            log.append("\n\n");
                         }
                         log.append("Error en el archivo: ").append(archivo.getName());
                     }

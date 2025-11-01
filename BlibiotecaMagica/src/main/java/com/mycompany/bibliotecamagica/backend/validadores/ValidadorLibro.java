@@ -67,8 +67,10 @@ public class ValidadorLibro extends Validador<InfoLibro>{
 
     @Override
     protected InfoLibro validarYObtenerRegistro() throws EntradaException {
-        if(!esIsbnValido()) throw new EntradaException("isbn invalido: \"" + isbn + "\"");
+        if(!esIsbnValido(isbn.toString())) throw new EntradaException("isbn invalido: \"" + isbn + "\"");
         Libro libro = obtenerLibro();
+        validarIDBiblio(origen);
+        validarIDBiblio(destino);
         Optional<PrioridadEnum> prioridad2 = PrioridadEnum.obtenerPrioridad(prioridad.toString());
         actual = prioridad2.orElseThrow(() -> new EntradaException("Prioridad ingresada invalida: \"" + prioridad + "\""));
         InfoLibro info = new InfoLibro(libro ,
@@ -80,12 +82,12 @@ public class ValidadorLibro extends Validador<InfoLibro>{
     protected void agregarRegistro(InfoLibro nuevo) throws EntradaException {
         EntradaLibro entrada = RedBibliotecas.INSTANCIA.getD().
                 calcularRuta(origen.toString(), destino.toString(), nuevo, actual);
-        Biblioteca actual = entrada.obtenerSiguiente();
-        actual.colocarEnEntrada(entrada);
-        RedBibliotecas.INSTANCIA.agregarNuevoTraslado(actual);
+        Biblioteca primera = entrada.obtenerSiguiente();
+        primera.colocarEnEntrada(entrada);
+        RedBibliotecas.INSTANCIA.agregarNuevoTraslado(primera);
     }
     
-    private boolean esIsbnValido(){
+    public boolean esIsbnValido(String isbn){
         if(isbn.length() < 13 || (!isbn.subSequence(0, 3).equals("978") && !isbn.subSequence(0, 3).equals("979"))){
             return false;
         }
@@ -113,21 +115,33 @@ public class ValidadorLibro extends Validador<InfoLibro>{
         }
     }
 
-    private void validarLibro() {
-        //metodo para buscar en el catalogo de libros para verificar que el libro tengo un isbn
-        //que corresponda a los datos que tiene
-    }
-
-    private Libro obtenerLibro() throws EntradaException {
-        //agregar logica para buscar el libro y validad que tenga los mismos datos si no existe crear otro
-        validarLibro();
+    public Libro obtenerLibro() throws EntradaException {
         Libro libro = new Libro(isbn.toString());
         libro.setAutor(autor.toString());
         libro.setAño(obtenerAño());
         libro.setGenero(genero.toString());
         libro.setTitulo(titulo.toString());
-        validarIDBiblio(origen);
-        validarIDBiblio(destino);
         return libro;
     }
+
+    public void setTitulo(StringBuilder titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setIsbn(StringBuilder isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setGenero(StringBuilder genero) {
+        this.genero = genero;
+    }
+
+    public void setAño(StringBuilder año) {
+        this.año = año;
+    }
+
+    public void setAutor(StringBuilder autor) {
+        this.autor = autor;
+    }
+
 }
