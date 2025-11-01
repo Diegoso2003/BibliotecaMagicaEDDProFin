@@ -32,12 +32,15 @@ public class EntradaLibro {
         return nuevoIngreso;
     }
 
-    public Cola<Biblioteca> getRuta() {
-        return ruta;
-    }
-
     public InfoTraslado getInfo() {
         return info;
     }
+
+    public boolean llegoASuDestino(){
+        return ruta.estaVacia();
+    }
     
+    public Biblioteca obtenerSiguiente(){
+        return ruta.obtenerPrimeroCola();
+    }
 }

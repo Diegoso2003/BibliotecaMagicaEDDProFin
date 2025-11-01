@@ -8,9 +8,9 @@ import com.mycompany.bibliotecamagica.backend.RedBibliotecas;
 import com.mycompany.bibliotecamagica.backend.VarGlobales;
 import com.mycompany.bibliotecamagica.backend.enums.EstadoLibroEnum;
 import com.mycompany.bibliotecamagica.backend.enums.PrioridadEnum;
-import com.mycompany.bibliotecamagica.backend.estructuras.cola.Cola;
 import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
+import com.mycompany.bibliotecamagica.backend.modelos.EntradaLibro;
 import com.mycompany.bibliotecamagica.backend.modelos.InfoLibro;
 import com.mycompany.bibliotecamagica.backend.modelos.Libro;
 import java.util.Optional;
@@ -72,14 +72,17 @@ public class ValidadorLibro extends Validador<InfoLibro>{
         Optional<PrioridadEnum> prioridad2 = PrioridadEnum.obtenerPrioridad(prioridad.toString());
         actual = prioridad2.orElseThrow(() -> new EntradaException("Prioridad ingresada invalida: \"" + prioridad + "\""));
         InfoLibro info = new InfoLibro(libro ,
-        EstadoLibroEnum.obtenerEstado(estado.toString()).orElseThrow(() -> new EntradaException("Estado de libro no valido")));
+        EstadoLibroEnum.obtenerEstado(estado.toString()).orElseThrow(() -> new EntradaException("Estado de libro no valido: " + estado)));
         return info;
     }
 
     @Override
     protected void agregarRegistro(InfoLibro nuevo) throws EntradaException {
-        Cola<Biblioteca> ruta = RedBibliotecas.INSTANCIA.getD().
-                calcularRuta(origen.toString(), destino.toString(), nuevo.getLibro(), actual);
+        EntradaLibro entrada = RedBibliotecas.INSTANCIA.getD().
+                calcularRuta(origen.toString(), destino.toString(), nuevo, actual);
+        Biblioteca actual = entrada.obtenerSiguiente();
+        actual.colocarEnEntrada(entrada);
+        RedBibliotecas.INSTANCIA.agregarNuevoTraslado(actual);
     }
     
     private boolean esIsbnValido(){

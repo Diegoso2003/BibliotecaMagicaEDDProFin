@@ -18,7 +18,7 @@ public class Biblioteca implements Comparable<Biblioteca>{
     private String ubicacion;
     private EstadoCola tIngreso;
     private EstadoCola tTraspaso;
-    private EstadoCola dIntervalo;
+    private EstadoCola despacho;
 
     public Biblioteca(String id, String nombre) {
         this.id = id;
@@ -36,7 +36,7 @@ public class Biblioteca implements Comparable<Biblioteca>{
     }
 
     
-    public synchronized void agregarLibro(InfoLibro libro){
+    public void agregarLibro(InfoLibro libro){
         
     }
     
@@ -78,13 +78,28 @@ public class Biblioteca implements Comparable<Biblioteca>{
     }
     
     public void setdIntervalo(long dIntervalo){
-        this.dIntervalo = new EstadoCola(dIntervalo);
+        this.despacho = new EstadoCola(dIntervalo);
     }
 
     public boolean verificarEstadoCola(){
-        return tIngreso.verificarTiempo() || dIntervalo.verificarTiempo() || dIntervalo.verificarTiempo();
+        return tIngreso.estaVacia() || tTraspaso.estaVacia() || despacho.estaVacia();
     }
     
+    public void colocarEnEntrada(EntradaLibro libro){
+        tIngreso.encolar(libro);
+        biblioColas.colocarEnEntrada(libro.getLibro().getLibro());
+    }
+    
+    public void colocarEnTraspaso(EntradaLibro libro){
+        tTraspaso.encolar(libro);
+        biblioColas.colocarEnTraspaso(libro.getLibro().getLibro());
+    }
+    
+    public void colocarEnDespacho(EntradaLibro libro){
+        despacho.encolar(libro);
+        biblioColas.colocarEnDespacho(libro.getLibro().getLibro());
+    }
+
     public EstadoCola gettIngreso() {
         return tIngreso;
     }
@@ -93,8 +108,8 @@ public class Biblioteca implements Comparable<Biblioteca>{
         return tTraspaso;
     }
 
-    public EstadoCola getdIntervalo() {
-        return dIntervalo;
+    public EstadoCola getDespacho() {
+        return despacho;
     }
 
     public BibliotecaFrontend getBiblioColas() {

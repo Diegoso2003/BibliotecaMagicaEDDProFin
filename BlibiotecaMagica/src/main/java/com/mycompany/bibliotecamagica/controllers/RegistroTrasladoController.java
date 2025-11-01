@@ -25,34 +25,25 @@ import javafx.scene.control.TableView;
  */
 public class RegistroTrasladoController implements Initializable {
 
-    @FXML
-    private TableView<InfoTraslado> registros;
-    @FXML
-    private TableColumn<InfoTraslado, String> isbn;
-    @FXML
-    private TableColumn<InfoTraslado, String> ruta;
-    @FXML
-    private TableColumn<InfoTraslado, String> tiempo;
-    @FXML
-    private TableColumn<InfoTraslado, String> costo;
-    @FXML
-    private TableColumn<InfoTraslado, String> prioridad;
+    @FXML private TableView<InfoTraslado> registros;
+    @FXML private TableColumn<InfoTraslado, String> numero;
+    @FXML private TableColumn<InfoTraslado, String> isbn;
+    @FXML private TableColumn<InfoTraslado, String> ruta;
+    @FXML private TableColumn<InfoTraslado, String> tiempo;
+    @FXML private TableColumn<InfoTraslado, String> costo;
+    @FXML private TableColumn<InfoTraslado, String> prioridad;
 
-    private ObservableList<InfoTraslado> datos = FXCollections.observableArrayList();
+    private final ObservableList<InfoTraslado> datos = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        registros.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        costo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCosto().toString()));
-        isbn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLibro().getIsbn()));
-        ruta.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRuta()));
-        tiempo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTiempo().toString()));
-        prioridad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPrioridad().toString().toLowerCase()));
-        Auxiliar.configurarSaltoDeLinea(ruta);
-        registros.setItems(datos);
+        numero.setPrefWidth(55);
+        numero.setMinWidth(55);
+        numero.setMaxWidth(55);
+        configurarColumnas();
         agregarDatos();
     }
 
@@ -61,6 +52,26 @@ public class RegistroTrasladoController implements Initializable {
         while (info.haySiguiente()) {
             datos.add(info.getActual());
         }
+    }
+
+    @FXML
+    private void recargar() {
+        datos.clear();
+        agregarDatos();
+    }
+
+    private void configurarColumnas() {
+        numero.setCellValueFactory(cellData -> {
+            int index = registros.getItems().indexOf(cellData.getValue()) + 1;
+            return new SimpleStringProperty(String.valueOf(index));
+        });
+        costo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCosto().toString()));
+        isbn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLibro().getIsbn()));
+        ruta.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRuta()));
+        tiempo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTiempo().toString()));
+        prioridad.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPrioridad().toString().toLowerCase()));
+        Auxiliar.configurarSaltoDeLinea(ruta);
+        registros.setItems(datos);
     }
 
 }

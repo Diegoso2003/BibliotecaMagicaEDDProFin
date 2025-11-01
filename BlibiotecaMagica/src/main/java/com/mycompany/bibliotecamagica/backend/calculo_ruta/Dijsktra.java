@@ -18,6 +18,8 @@ import com.mycompany.bibliotecamagica.backend.modelos.EntradaLibro;
 import com.mycompany.bibliotecamagica.backend.modelos.InfoLibro;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -28,7 +30,7 @@ public class Dijsktra {
     private final HashMap<Biblioteca, BigDecimal> costos;
     private final HashMap<Biblioteca, Long> tiempos;
     private final HashMap<Biblioteca, Biblioteca> padres;
-    private final HashMap<Biblioteca, Boolean> bibliotecasVisitadas;
+    private final Set<Biblioteca> bibliotecasVisitadas;
     private final ListaDoble<AuxiliarPrioridad> colaDePrioridad;
 
     public Dijsktra() {
@@ -36,7 +38,7 @@ public class Dijsktra {
         padres = new HashMap<>();
         tiempos = new HashMap<>();
         costos = new HashMap<>();
-        bibliotecasVisitadas = new HashMap<>();
+        bibliotecasVisitadas = new HashSet<>();
     }
 
     public EntradaLibro calcularRuta(String idOrigen, String idDestino, InfoLibro libro, PrioridadEnum prioridad) throws EntradaException{
@@ -63,7 +65,7 @@ public class Dijsktra {
                 IteradorLista<Conexion> iterador = conexiones.getIterador();
                 while(iterador.haySiguiente()){
                     Conexion conexion = iterador.getActual();
-                    if(!bibliotecasVisitadas.containsKey(conexion.getBiblioAdyascente().getBiblioteca())){
+                    if(!bibliotecasVisitadas.contains(conexion.getBiblioAdyascente().getBiblioteca())){
                         compararDatos(aux, conexion);
                     }
                 }
@@ -82,10 +84,10 @@ public class Dijsktra {
     }
 
     private boolean esBibliotecaYaVisitada(NodoGrafo actual) {
-        if(bibliotecasVisitadas.containsKey(actual.getBiblioteca())){
+        if(bibliotecasVisitadas.contains(actual.getBiblioteca())){
             return true;
         }
-        bibliotecasVisitadas.put(actual.getBiblioteca(), Boolean.TRUE);
+        bibliotecasVisitadas.add(actual.getBiblioteca());
         return false;
     }
 

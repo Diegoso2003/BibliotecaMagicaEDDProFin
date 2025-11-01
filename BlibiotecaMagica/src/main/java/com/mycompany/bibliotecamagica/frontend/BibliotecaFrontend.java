@@ -5,9 +5,13 @@
 package com.mycompany.bibliotecamagica.frontend;
 
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
+import com.mycompany.bibliotecamagica.backend.modelos.Libro;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -19,12 +23,13 @@ import javafx.scene.layout.VBox;
  * @author rafael-cayax
  */
 public class BibliotecaFrontend {
+
     private static final double TAMAÑO = 300;
     private VBox vista;
     private ObservableList<String> datosIngreso;
     private ObservableList<String> datosTraspaso;
     private ObservableList<String> datosDespacho;
-    
+
     public BibliotecaFrontend(Biblioteca biblioteca) {
         crearPanel(new Label(biblioteca.toString()));
     }
@@ -38,6 +43,9 @@ public class BibliotecaFrontend {
         col.setPercentWidth(33.33);
         col.setHgrow(Priority.ALWAYS);
         grid.getColumnConstraints().addAll(col, col, col);
+        datosIngreso = FXCollections.observableArrayList();
+        datosTraspaso = FXCollections.observableArrayList();
+        datosDespacho = FXCollections.observableArrayList();
         VBox colaIngreso = crearColumnaConLista("Cola de ingreso", datosIngreso);
         VBox colaTraspaso = crearColumnaConLista("Cola de traspaso", datosTraspaso);
         VBox colaDespacho = crearColumnaConLista("Cola de despacho", datosDespacho);
@@ -47,7 +55,7 @@ public class BibliotecaFrontend {
         nombre.getStyleClass().add("titulo");
         vista.getChildren().addAll(nombre, grid);
     }
-    
+
     private VBox crearColumnaConLista(String titulo, ObservableList<String> colaItems) {
         VBox columna = new VBox(8);
         Label lblTitulo = new Label(titulo);
@@ -60,11 +68,59 @@ public class BibliotecaFrontend {
         lista.setFocusTraversable(false);
         lista.setItems(colaItems);
         columna.getChildren().addAll(lblTitulo, lista);
+        lista.setCellFactory(lv -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    setAlignment(Pos.CENTER);
+                }
+            }
+        });
+        columna.setAlignment(Pos.CENTER);
         return columna;
     }
 
     public VBox getVista() {
         return vista;
     }
-    
+
+    public void colocarEnEntrada(Libro libro) {
+        Platform.runLater(() -> {
+            datosIngreso.add(libro.getIsbn());
+        });
+    }
+
+    public void eliminarPrimeroEntrada() {
+        Platform.runLater(() -> {
+            datosIngreso.remove(0);
+        });
+    }
+
+    public void colocarEnTraspaso(Libro libro) {
+        Platform.runLater(() -> {
+            datosTraspaso.add(libro.getIsbn());
+        });
+    }
+
+    public void eliminarPrimeroTraspaso() {
+        Platform.runLater(() -> {
+            datosTraspaso.remove(0);
+        });
+    }
+
+    public void colocarEnDespacho(Libro libro) {
+        Platform.runLater(() -> {
+            datosDespacho.add(libro.getIsbn());
+        });
+    }
+
+    public void eliminarPrimeroDespacho() {
+        Platform.runLater(() -> {
+            datosDespacho.remove(0);
+        });
+    }
 }

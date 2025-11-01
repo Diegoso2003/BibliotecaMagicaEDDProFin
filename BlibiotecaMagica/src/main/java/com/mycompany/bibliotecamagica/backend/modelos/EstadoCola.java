@@ -11,7 +11,7 @@ import com.mycompany.bibliotecamagica.backend.estructuras.cola.Cola;
  * @author rafael-cayax
  */
 public class EstadoCola {
-    private final Cola<InfoLibro> cola = new Cola<>();
+    private final Cola<EntradaLibro> cola = new Cola<>();
     private final long tiempo;
     private long auxiliar;
     
@@ -32,15 +32,12 @@ public class EstadoCola {
         this.auxiliar = auxiliar;
     }
     
-    public boolean verificarTiempo(){
+    public boolean estaVacia(){
         return !cola.estaVacia();
     }
     
-    public InfoLibro obtenerSiguiente(){
-        return cola.obtenerPrimeroCola();
-    }
-    
     public boolean desencolar(long tiempo){
+        if(cola.estaVacia()) return false;
         auxiliar -= tiempo;
         if(auxiliar <= 0){
             auxiliar = this.tiempo;
@@ -48,8 +45,12 @@ public class EstadoCola {
         }
         return false;
     }
+
+    public EntradaLibro obtenerPrimeroEnCola(){
+        return cola.obtenerPrimeroCola();
+    }
     
-    public void encolar(InfoLibro libro){
+    public void encolar(EntradaLibro libro){
         cola.agregar(libro);
     }
 }

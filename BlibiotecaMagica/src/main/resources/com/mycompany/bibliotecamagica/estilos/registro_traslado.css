@@ -15,6 +15,11 @@
     -fx-font-weight: bold;
     -fx-border-color: #6a8c7a;
     -fx-border-width: 0 1 1 0;
+    -fx-cursor: default;
+}
+
+.table-view .column-header .show-hide-columns-button {
+    -fx-cursor: default;
 }
 
 .table-view .column-header .label {
@@ -25,6 +30,7 @@
 
 .table-view .filler {
     -fx-background-color: #6a8c7a;
+    -fx-cursor: default;
 }
 
 .table-view .table-cell {

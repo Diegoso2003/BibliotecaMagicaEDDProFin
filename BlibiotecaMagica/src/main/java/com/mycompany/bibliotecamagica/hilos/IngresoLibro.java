@@ -4,9 +4,10 @@
  */
 package com.mycompany.bibliotecamagica.hilos;
 
+import com.mycompany.bibliotecamagica.backend.RedBibliotecas;
 import com.mycompany.bibliotecamagica.backend.enums.EstadoLibroEnum;
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
-import com.mycompany.bibliotecamagica.backend.modelos.InfoLibro;
+import com.mycompany.bibliotecamagica.backend.modelos.EntradaLibro;
 
 /**
  *
@@ -14,21 +15,23 @@ import com.mycompany.bibliotecamagica.backend.modelos.InfoLibro;
  */
 public class IngresoLibro extends Thread{
     private final Biblioteca biblioteca;
-    private final InfoLibro libro;
-    private final boolean nuevo;
+    private final EntradaLibro libro;
 
-    public IngresoLibro(Biblioteca biblioteca, InfoLibro libro, boolean nuevo) {
+    public IngresoLibro(Biblioteca biblioteca, EntradaLibro libro) {
         this.biblioteca = biblioteca;
         this.libro = libro;
-        this.nuevo = nuevo;
     }
     
     @Override
     public void run(){
-        if(!nuevo || libro.getEstado() == EstadoLibroEnum.EN_TRANSITO){
-            libro.setEstado(EstadoLibroEnum.DISPONIBLE);
+        if(!libro.isNuevoIngreso() || libro.getLibro().getEstado() == EstadoLibroEnum.EN_TRANSITO){
+            libro.getLibro().setEstado(EstadoLibroEnum.DISPONIBLE);
         }
-        biblioteca.agregarLibro(libro);
+        biblioteca.agregarLibro(libro.getLibro());
+        agregarInfoTraslado();
     }
     
+    private synchronized void agregarInfoTraslado(){
+        RedBibliotecas.INSTANCIA.getTraslados().agregar(libro.getInfo());
+    }
 }
