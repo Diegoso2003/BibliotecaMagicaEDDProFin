@@ -13,6 +13,7 @@ public enum VistasEnum {
     COLAS_DESPACHO("colas_despacho"),
     FORM_BIBLIOTECA("form_biblioteca"),
     FORM_CONEXION("form_conexion"),
+    FORM_INGRESO_LIBRO("ingreso_libro"),
     REGISTRO_TRASLADO("registro_traslado"),
     GRAFICA_GRAFO("grafica_grafo");
     

@@ -9,13 +9,13 @@ import java.math.BigDecimal;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -85,35 +85,37 @@ public class Auxiliar {
     }
     
     public static <S, T> void configurarSaltoDeLinea(TableColumn<S, T> columna) {
-        columna.setCellFactory(col -> {
-            return new TableCell<S, T>() {
-                private final Label label = new Label();
-
-                {
-                    label.setWrapText(true);
-                    label.setStyle("-fx-alignment: CENTER; -fx-text-alignment: center; -fx-text-fill: #22342f;");
-                    setGraphic(label);
-                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+    columna.setCellFactory(col -> {
+        return new TableCell<S, T>() {
+            private final Text text = new Text();
+            
+            {
+                text.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+                text.setStyle("-fx-fill: #22342f;");
+                setGraphic(text);
+                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                setStyle("-fx-alignment: CENTER;");
+            }
+            
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    text.setText(null);
+                } else {
+                    text.setText(item.toString());
                 }
-
-                @Override
-                protected void updateItem(T item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        label.setText(null);
-                    } else {
-                        label.setText(item.toString());
-                    }
+            }
+            
+            @Override
+            protected void layoutChildren() {
+                super.layoutChildren();
+                double width = getWidth() - getInsets().getLeft() - getInsets().getRight() - 10;
+                if (width > 0) {
+                    text.setWrappingWidth(width);
                 }
-
-                @Override
-                protected void layoutChildren() {
-                    super.layoutChildren();
-                    if (label.getText() != null && !label.getText().isEmpty()) {
-                        label.setPrefWidth(getWidth() - getInsets().getLeft() - getInsets().getRight());
-                    }
-                }
-            };
-        });
-    }
+            }
+        };
+    });
+}
 }

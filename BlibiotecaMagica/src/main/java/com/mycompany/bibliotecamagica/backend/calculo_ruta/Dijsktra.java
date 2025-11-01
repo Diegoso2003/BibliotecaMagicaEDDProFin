@@ -42,7 +42,6 @@ public class Dijsktra {
     }
 
     public EntradaLibro calcularRuta(String idOrigen, String idDestino, InfoLibro libro, PrioridadEnum prioridad) throws EntradaException{
-        limpiarVariables();
         this.prioridad = prioridad;
         NodoGrafo origen = RedBibliotecas.INSTANCIA.buscar(idOrigen).orElseThrow(() -> 
         new EntradaException("Biblioteca de origen no encontrada: " + idOrigen));
@@ -51,8 +50,15 @@ public class Dijsktra {
         return iniciarAnalisis(origen, destino, libro, true);
     }
 
+    public void setPrioridad(PrioridadEnum prioridad) {
+        this.prioridad = prioridad;
+    }
+    
     public EntradaLibro iniciarAnalisis(NodoGrafo origen, NodoGrafo destino, InfoLibro libro, boolean nuevo) throws EntradaException {
-        colaDePrioridad.agregar(new AuxiliarPrioridad(prioridad, origen, Long.valueOf(0), new BigDecimal(0)));
+        limpiarVariables();
+        colaDePrioridad.agregar(new AuxiliarPrioridad(prioridad, origen, 0L, BigDecimal.ZERO));
+        tiempos.put(origen.getBiblioteca(), 0L);
+        costos.put(origen.getBiblioteca(), BigDecimal.ZERO);
         padres.put(origen.getBiblioteca(), null);
         while(!colaDePrioridad.estaVacia()){
             AuxiliarPrioridad aux = colaDePrioridad.eliminarPrimero();
@@ -71,8 +77,8 @@ public class Dijsktra {
                 }
             }
         }
-        throw new EntradaException("No se encontro ninguna forma de llegar de la biblioteca con ID: " + origen + 
-                " hasta la biblioteca con ID: " + destino);
+        throw new EntradaException("No se encontro ninguna forma de llegar de la biblioteca: " + origen + 
+                " hasta la biblioteca: " + destino);
     }
 
     private void limpiarVariables() {
