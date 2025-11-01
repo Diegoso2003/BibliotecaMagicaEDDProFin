@@ -95,7 +95,7 @@ public class ManejadorColas extends Thread {
     private void limpiarBibliotecas() {
         Set<Biblioteca> paraRemover = new HashSet<>();
         for (Biblioteca bib : bibliotecas) {
-            if (!bib.verificarEstadoCola()) {
+            if (!bib.verificarEstadoColas()) {
                 paraRemover.add(bib);
             }
         }

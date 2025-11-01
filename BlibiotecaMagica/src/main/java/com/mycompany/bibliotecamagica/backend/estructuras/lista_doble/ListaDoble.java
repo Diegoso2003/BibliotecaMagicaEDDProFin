@@ -13,6 +13,12 @@ import java.util.Optional;
  */
 public class ListaDoble<T extends Comparable> extends ListaSimple<T>{
     
+    private final boolean duplicados;
+
+    public ListaDoble(boolean duplicados) {
+        this.duplicados = duplicados;
+    }
+    
     @Override
     public boolean agregar(T elemento){
         NodoDoble<T> nuevo = new NodoDoble<>(elemento);
@@ -45,14 +51,14 @@ public class ListaDoble<T extends Comparable> extends ListaSimple<T>{
 
     private boolean agregarExtremos(NodoDoble<T> nuevo) {
         NodoDoble<T> p = (NodoDoble)primero;
-        if(nuevo.compareTo(p) < 0){
+        if(nuevo.compareTo(p) < 0 || (nuevo.compareTo(p) == 0 && duplicados)){
             nuevo.setSiguiente(primero);
             p.setAnterior(nuevo);
             primero = nuevo;
             return true;
         }
         NodoDoble<T> u = (NodoDoble)ultimo;
-        if(nuevo.compareTo(u) > 0){
+        if(nuevo.compareTo(u) > 0 || (nuevo.compareTo(u) == 0 && duplicados)){
             nuevo.setAnterior(u);
             ultimo.setSiguiente(nuevo);
             ultimo = nuevo;
@@ -82,7 +88,7 @@ public class ListaDoble<T extends Comparable> extends ListaSimple<T>{
         while(nuevo.compareTo(actual) > 0){
             actual = actual.getSiguiente();
         }
-        if(actual.compareTo(nuevo) != 0){
+        if(actual.compareTo(nuevo) != 0 || duplicados){
             nuevo.setAnterior(actual.getAnterior());
             actual.getAnterior().setSiguiente(nuevo);
             actual.setAnterior(nuevo);
@@ -97,7 +103,7 @@ public class ListaDoble<T extends Comparable> extends ListaSimple<T>{
         while(nuevo.compareTo(actual) < 0){
             actual = actual.getAnterior();
         }
-        if(actual.compareTo(nuevo) != 0){
+        if(actual.compareTo(nuevo) != 0 || duplicados){
             nuevo.setAnterior(actual);
             nuevo.setSiguiente(actual.getSiguiente());
             actual.getSiguiente().setAnterior(nuevo);

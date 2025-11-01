@@ -17,7 +17,7 @@ public class NodoGrafo  implements Comparable<NodoGrafo>{
 
     public NodoGrafo(Biblioteca biblioteca) {
         this.biblioteca = biblioteca;
-        conexiones = new ListaDoble<>();
+        conexiones = new ListaDoble<>(false);
     }
 
     public Biblioteca getBiblioteca() {

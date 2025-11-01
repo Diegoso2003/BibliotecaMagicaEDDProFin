@@ -25,8 +25,8 @@ public enum RedBibliotecas {
     private ManejadorColas manejador;
 
     private RedBibliotecas() {
-        bibliotecas = new ListaDoble<>();
-        traslados = new ListaDoble<>();
+        bibliotecas = new ListaDoble<>(false);
+        traslados = new ListaDoble<>(true);
         d = new Dijsktra();
         manejador = new ManejadorColas();
     }

@@ -34,7 +34,7 @@ public class Dijsktra {
     private final ListaDoble<AuxiliarPrioridad> colaDePrioridad;
 
     public Dijsktra() {
-        colaDePrioridad = new ListaDoble<>();
+        colaDePrioridad = new ListaDoble<>(true);
         padres = new HashMap<>();
         tiempos = new HashMap<>();
         costos = new HashMap<>();

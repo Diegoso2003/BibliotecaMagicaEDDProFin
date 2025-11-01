@@ -26,9 +26,12 @@ public class BibliotecaFrontend {
 
     private static final double TAMAÑO = 300;
     private VBox vista;
-    private ObservableList<String> datosIngreso;
-    private ObservableList<String> datosTraspaso;
-    private ObservableList<String> datosDespacho;
+    private final ObservableList<String> datosIngreso = FXCollections.observableArrayList();;
+    private final ObservableList<String> datosTraspaso = FXCollections.observableArrayList();;
+    private final ObservableList<String> datosDespacho = FXCollections.observableArrayList();;
+    private final Label tiempoIngreso = new Label();
+    private final Label tiempoTraspaso = new Label();
+    private final Label tiempoDespacho = new Label();
 
     public BibliotecaFrontend(Biblioteca biblioteca) {
         crearPanel(new Label(biblioteca.toString()));
@@ -43,12 +46,9 @@ public class BibliotecaFrontend {
         col.setPercentWidth(33.33);
         col.setHgrow(Priority.ALWAYS);
         grid.getColumnConstraints().addAll(col, col, col);
-        datosIngreso = FXCollections.observableArrayList();
-        datosTraspaso = FXCollections.observableArrayList();
-        datosDespacho = FXCollections.observableArrayList();
-        VBox colaIngreso = crearColumnaConLista("Cola de ingreso", datosIngreso);
-        VBox colaTraspaso = crearColumnaConLista("Cola de traspaso", datosTraspaso);
-        VBox colaDespacho = crearColumnaConLista("Cola de despacho", datosDespacho);
+        VBox colaIngreso = crearColumnaConLista("Cola de ingreso", datosIngreso, tiempoIngreso);
+        VBox colaTraspaso = crearColumnaConLista("Cola de traspaso", datosTraspaso, tiempoTraspaso);
+        VBox colaDespacho = crearColumnaConLista("Cola de despacho", datosDespacho, tiempoDespacho);
         grid.add(colaIngreso, 0, 0);
         grid.add(colaTraspaso, 1, 0);
         grid.add(colaDespacho, 2, 0);
@@ -56,7 +56,7 @@ public class BibliotecaFrontend {
         vista.getChildren().addAll(nombre, grid);
     }
 
-    private VBox crearColumnaConLista(String titulo, ObservableList<String> colaItems) {
+    private VBox crearColumnaConLista(String titulo, ObservableList<String> colaItems, Label tiempo) {
         VBox columna = new VBox(8);
         Label lblTitulo = new Label(titulo);
         lblTitulo.getStyleClass().add("subtitulo");
@@ -64,10 +64,14 @@ public class BibliotecaFrontend {
         lista.setMinHeight(TAMAÑO);
         lista.setPrefHeight(TAMAÑO);
         lista.setMaxHeight(TAMAÑO);
-        lista.setMouseTransparent(true);
+        lista.setSelectionModel(null);
         lista.setFocusTraversable(false);
+        lista.setStyle(
+                  "-fx-background-insets: 0;"
+                + "-fx-padding: 0;"
+        );
         lista.setItems(colaItems);
-        columna.getChildren().addAll(lblTitulo, lista);
+        columna.getChildren().addAll(lblTitulo, tiempo,lista);
         lista.setCellFactory(lv -> new ListCell<String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
@@ -123,4 +127,17 @@ public class BibliotecaFrontend {
             datosDespacho.remove(0);
         });
     }
+
+    public Label getTiempoIngreso() {
+        return tiempoIngreso;
+    }
+
+    public Label getTiempoTraspaso() {
+        return tiempoTraspaso;
+    }
+
+    public Label getTiempoDespacho() {
+        return tiempoDespacho;
+    }
+    
 }

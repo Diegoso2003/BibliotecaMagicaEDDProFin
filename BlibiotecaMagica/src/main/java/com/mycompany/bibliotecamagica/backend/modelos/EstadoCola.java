@@ -5,6 +5,8 @@
 package com.mycompany.bibliotecamagica.backend.modelos;
 
 import com.mycompany.bibliotecamagica.backend.estructuras.cola.Cola;
+import javafx.application.Platform;
+import javafx.scene.control.Label;
 
 /**
  *
@@ -13,11 +15,13 @@ import com.mycompany.bibliotecamagica.backend.estructuras.cola.Cola;
 public class EstadoCola {
     private final Cola<EntradaLibro> cola = new Cola<>();
     private final long tiempo;
+    private final Label contador;
     private long auxiliar;
     
-    public EstadoCola(long tiempo) {
+    public EstadoCola(long tiempo, Label contador) {
         this.tiempo = tiempo;
         this.auxiliar = tiempo;
+        this.contador = contador;
     }
 
     public long getTiempo() {
@@ -33,17 +37,7 @@ public class EstadoCola {
     }
     
     public boolean estaVacia(){
-        return !cola.estaVacia();
-    }
-    
-    public boolean desencolar(long tiempo){
-        if(cola.estaVacia()) return false;
-        auxiliar -= tiempo;
-        if(auxiliar <= 0){
-            auxiliar = this.tiempo;
-            return true;
-        }
-        return false;
+        return cola.estaVacia();
     }
 
     public EntradaLibro obtenerPrimeroEnCola(){
@@ -52,5 +46,21 @@ public class EstadoCola {
     
     public void encolar(EntradaLibro libro){
         cola.agregar(libro);
+    }
+    
+    public boolean desencolar(long tiempo){
+        if(cola.estaVacia()) return false;
+        auxiliar -= tiempo;
+        if(auxiliar <= 0){
+            auxiliar = this.tiempo;
+            Platform.runLater(() -> {
+                contador.setText(this.tiempo + "");
+            });
+            return true;
+        }
+        Platform.runLater(() -> {
+            contador.setText(auxiliar + "");
+        });
+        return false;
     }
 }

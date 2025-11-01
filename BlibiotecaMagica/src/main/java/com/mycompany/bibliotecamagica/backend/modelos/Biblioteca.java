@@ -70,19 +70,22 @@ public class Biblioteca implements Comparable<Biblioteca>{
     }
 
     public void settIngreso(long tIngreso) {
-        this.tIngreso = new EstadoCola(tIngreso);
+        biblioColas.getTiempoIngreso().setText(tIngreso + "");
+        this.tIngreso = new EstadoCola(tIngreso, biblioColas.getTiempoIngreso());
     }
 
     public void settTraspaso(long tTraspaso) {
-        this.tTraspaso = new EstadoCola(tTraspaso);
+        biblioColas.getTiempoTraspaso().setText(tTraspaso + "");
+        this.tTraspaso = new EstadoCola(tTraspaso, biblioColas.getTiempoTraspaso());
     }
     
     public void setdIntervalo(long dIntervalo){
-        this.despacho = new EstadoCola(dIntervalo);
+        biblioColas.getTiempoDespacho().setText(dIntervalo + "");
+        this.despacho = new EstadoCola(dIntervalo, biblioColas.getTiempoDespacho());
     }
 
-    public boolean verificarEstadoCola(){
-        return tIngreso.estaVacia() || tTraspaso.estaVacia() || despacho.estaVacia();
+    public boolean verificarEstadoColas(){
+        return !tIngreso.estaVacia() || !tTraspaso.estaVacia() || !despacho.estaVacia();
     }
     
     public synchronized void colocarEnEntrada(EntradaLibro libro){
