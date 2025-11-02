@@ -4,6 +4,7 @@
  */
 package com.mycompany.bibliotecamagica.backend;
 
+import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,7 +22,7 @@ public class GeneradorSvg {
         this.dot = dot;
     }
     
-    public String generarSVG() {
+    public String generarSVG() throws EntradaException {
         try {
             ProcessBuilder pb = new ProcessBuilder("dot", "-Tsvg");
             Process process = pb.start();
@@ -43,20 +44,12 @@ public class GeneradorSvg {
             
             int exitCode = process.waitFor();
             if (exitCode != 0) {
-                try (BufferedReader errorReader = new BufferedReader(
-                        new InputStreamReader(process.getErrorStream()))) {
-                    String errorLine;
-                    while ((errorLine = errorReader.readLine()) != null) {
-                        System.err.println("Graphviz error: " + errorLine);
-                    }
-                }
-                throw new RuntimeException("Graphviz falló con código: " + exitCode);
+                throw new EntradaException("Error al cargar la grafica");
             }
-            
             return svg.toString();
             
         } catch (IOException | InterruptedException e) {
-            return "<svg><text x='10' y='20'>Error: error al generar la imagen </text></svg>";
+            throw new EntradaException("Error al cargar la grafica");
         }
     }
 }

@@ -14,8 +14,9 @@ public enum VistasEnum {
     FORM_BIBLIOTECA("form_biblioteca"),
     FORM_CONEXION("form_conexion"),
     FORM_INGRESO_LIBRO("ingreso_libro"),
+    GRAFICA_GRAFO("grafica_grafo"),
     REGISTRO_TRASLADO("registro_traslado"),
-    GRAFICA_GRAFO("grafica_grafo");
+    VISTA_ESTRUCTURAS("vista_estructuras");
     
     private final String ventana;
     

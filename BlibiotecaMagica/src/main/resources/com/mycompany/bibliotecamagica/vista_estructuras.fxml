@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane styleClass="principal" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.bibliotecamagica.controllers.VistaEstructurasController">
+   <center>
+      <WebView fx:id="vistaGrafica" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="800.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <ComboBox fx:id="biblioteca" onAction="#validarSeleccion" prefWidth="300.0" promptText="seleccione una biblioteca" />
+            <ComboBox fx:id="estructura" onAction="#validarSeleccion" prefWidth="225.0" promptText="seleccione una estructura" />
+            <Button fx:id="exportar" disable="true" mnemonicParsing="false" onAction="#exportarGrafica" styleClass="btn-primary" text="Exportar grafica" />
+            <Button fx:id="botonRecargar" disable="true" mnemonicParsing="false" onAction="#validarSeleccion" styleClass="btn-primary" text="Recargar" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </HBox>
+   </top>
+</BorderPane>

@@ -34,4 +34,10 @@ public enum EstadoLibroEnum {
         }
         return Optional.empty();
     }
+
+    @Override
+    public String toString() {
+        return descripcion;
+    }
+    
 }

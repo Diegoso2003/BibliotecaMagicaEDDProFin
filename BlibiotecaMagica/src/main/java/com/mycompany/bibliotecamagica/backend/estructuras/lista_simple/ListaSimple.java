@@ -60,4 +60,9 @@ public class ListaSimple<T> {
         numElementos--;
         return dato;
     }
+    
+    public T obtenerPrimero(){
+        if(estaVacia()) return null;
+        return primero.elemento;
+    }
 }

@@ -81,4 +81,9 @@ public class PrincipalController implements Initializable {
     private void cargarFormIngresoLibro(){
         cargarVista(VistasEnum.FORM_INGRESO_LIBRO);
     }
+    
+    @FXML
+    private void cargarVistaEstructuras(){
+        cargarVista(VistasEnum.VISTA_ESTRUCTURAS);
+    }
 }

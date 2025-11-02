@@ -5,7 +5,6 @@
 package com.mycompany.bibliotecamagica.hilos;
 
 import com.mycompany.bibliotecamagica.backend.RedBibliotecas;
-import com.mycompany.bibliotecamagica.backend.enums.EstadoLibroEnum;
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
 import com.mycompany.bibliotecamagica.backend.modelos.EntradaLibro;
 
@@ -24,8 +23,9 @@ public class IngresoLibro extends Thread{
     
     @Override
     public void run(){
-        if(!libro.isNuevoIngreso() || libro.getLibro().getEstado() == EstadoLibroEnum.EN_TRANSITO){
-            libro.getLibro().setEstado(EstadoLibroEnum.DISPONIBLE);
+        if(!libro.isNuevoIngreso() && libro.getLibro().tieneEnTransito()){
+            libro.getLibro().disminuirEnTransito();
+            libro.getLibro().
         }
         biblioteca.agregarLibro(libro.getLibro());
         agregarInfoTraslado();

@@ -67,12 +67,12 @@ public class Libro implements Comparable<Libro>{
 
     @Override
     public String toString() {
-        return getSinGuiones();
+        return isbn;
     }
 
     @Override
     public int compareTo(Libro o) {
-        return isbn.compareTo(o.isbn);
+        return this.getSinGuiones().compareTo(o.getSinGuiones());
     }
     
 }

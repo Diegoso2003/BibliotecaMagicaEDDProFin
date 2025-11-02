@@ -7,10 +7,15 @@ package com.mycompany.bibliotecamagica.controllers;
 
 import com.mycompany.bibliotecamagica.backend.GeneradorSvg;
 import com.mycompany.bibliotecamagica.backend.RedBibliotecas;
+import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
+import com.mycompany.bibliotecamagica.frontend.Auxiliar;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 
@@ -28,10 +33,23 @@ public class GraficaGrafoController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        GeneradorSvg generador = new GeneradorSvg(RedBibliotecas.INSTANCIA.obtenerDot());
-        webView = new WebView();
-        webView.getEngine().loadContent(generador.generarSVG(), "image/svg+xml");
-        panelGrafo.setCenter(webView);
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                Platform.runLater(() -> {
+                    try {
+                        webView = new WebView();
+                        panelGrafo.setCenter(webView);
+                        GeneradorSvg generador = new GeneradorSvg(RedBibliotecas.INSTANCIA.obtenerDot());
+                        webView.getEngine().loadContent(generador.generarSVG(), "image/svg+xml");
+                    } catch (EntradaException ex) {
+                        Auxiliar.lanzarAlerta(Alert.AlertType.ERROR, "Error", ex.getMessage(), panelGrafo);
+                    }
+                });
+                return null;
+            }
+        };
+        new Thread(task).start();
     }    
 
 }

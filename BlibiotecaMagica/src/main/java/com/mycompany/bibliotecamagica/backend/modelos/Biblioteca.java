@@ -4,6 +4,9 @@
  */
 package com.mycompany.bibliotecamagica.backend.modelos;
 
+import com.mycompany.bibliotecamagica.backend.VarGlobales;
+import com.mycompany.bibliotecamagica.backend.estructuras.arbol_avl.ArbolAvl;
+import com.mycompany.bibliotecamagica.backend.estructuras.arbol_avl.GeneradorDotAvl;
 import com.mycompany.bibliotecamagica.frontend.BibliotecaFrontend;
 import java.util.Objects;
 
@@ -19,11 +22,13 @@ public class Biblioteca implements Comparable<Biblioteca>{
     private EstadoCola tIngreso;
     private EstadoCola tTraspaso;
     private EstadoCola despacho;
+    private ArbolAvl<InfoLibro> librosPorTitulo;
 
     public Biblioteca(String id, String nombre) {
         this.id = id;
         this.nombre = nombre;
         biblioColas = new BibliotecaFrontend(this);
+        librosPorTitulo = new ArbolAvl<>(VarGlobales.COM_TITULO);
     }
     
     /**
@@ -37,7 +42,7 @@ public class Biblioteca implements Comparable<Biblioteca>{
 
     
     public void agregarLibro(InfoLibro libro){
-        
+        librosPorTitulo.agregarElemento(libro);
     }
     
     public String getId() {
@@ -119,6 +124,11 @@ public class Biblioteca implements Comparable<Biblioteca>{
         return biblioColas;
     }
 
+    public String obtenerDotAvl(){
+        GeneradorDotAvl generador = new GeneradorDotAvl();
+        return generador.obtenerDot(librosPorTitulo.getRaiz());
+    }
+    
     @Override
     public int compareTo(Biblioteca o) {
         return this.id.compareTo(o.id);

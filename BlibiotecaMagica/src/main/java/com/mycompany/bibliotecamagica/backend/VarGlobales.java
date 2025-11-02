@@ -4,6 +4,7 @@
  */
 package com.mycompany.bibliotecamagica.backend;
 
+import com.mycompany.bibliotecamagica.backend.comparadores.ComparadorTitulo;
 import java.math.BigDecimal;
 
 /**
@@ -20,4 +21,5 @@ public class VarGlobales {
     public static final BigDecimal MAX_PRECIO = new BigDecimal("1000000.00");
     public static final BigDecimal PRECIO_DEFAULT = new BigDecimal("100.00");
     public static final BigDecimal INCREMENTO_PRECIO = new BigDecimal("1");
+    public static final ComparadorTitulo COM_TITULO = new ComparadorTitulo();
 }
