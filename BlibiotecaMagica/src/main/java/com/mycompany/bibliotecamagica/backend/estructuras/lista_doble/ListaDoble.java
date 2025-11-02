@@ -132,6 +132,44 @@ public class ListaDoble<T extends Comparable> extends ListaSimple<T>{
     }
     
     public void eliminar(T elemento){
-        
+        NodoDoble<T> p = (NodoDoble) primero;
+        if(p.getElemento().compareTo(elemento) == 0){
+            primero = primero.getSiguiente();
+            numElementos--;
+            return;
+        }
+        NodoDoble<T> u = (NodoDoble) ultimo;
+        if(u.getElemento().compareTo(elemento) == 0){
+            ultimo = u.getAnterior();
+            ultimo.setSiguiente(null);
+            numElementos--;
+            return;
+        }
+        NodoDoble<T> posicion = null;
+        if(deboAvanzarDesdeInicio(new NodoDoble<T>(elemento))){
+            posicion = eliminarDesdeInicio(elemento);
+        } else {
+            posicion = eliminarDesdeFinal(elemento);
+        }
+        posicion.getSiguiente().setAnterior(posicion.getAnterior());
+        posicion.getAnterior().setSiguiente(posicion.getSiguiente());
+        posicion.setSiguiente(null);
+        numElementos--;
+    }
+
+    private NodoDoble<T> eliminarDesdeInicio(T elemento) {
+        NodoDoble<T> actual = (NodoDoble)primero;
+        while(actual.getElemento().compareTo(elemento) != 0){
+            actual = actual.getSiguiente();
+        }
+        return actual;
+    }
+
+    private NodoDoble<T> eliminarDesdeFinal(T elemento) {
+        NodoDoble<T> actual = (NodoDoble)ultimo;
+        while(actual.getElemento().compareTo(elemento) != 0){
+            actual = actual.getAnterior();
+        }
+        return actual;
     }
 }

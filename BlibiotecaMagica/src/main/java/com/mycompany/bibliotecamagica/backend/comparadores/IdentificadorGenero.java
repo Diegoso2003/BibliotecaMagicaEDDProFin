@@ -4,17 +4,17 @@
  */
 package com.mycompany.bibliotecamagica.backend.comparadores;
 
-import com.mycompany.bibliotecamagica.backend.modelos.ListaLibros;
+import com.mycompany.bibliotecamagica.backend.modelos.LibroBiblioteca;
 
 /**
  *
  * @author rafael-cayax
  */
-public class IdentificadorGenero implements Identificable<ListaLibros> {
+public class IdentificadorGenero implements Identificable<LibroBiblioteca> {
 
     @Override
-    public String getClave(ListaLibros elemento) {
-        return elemento.obtenerPrimero().getLibro().getGenero();
+    public String getClave(LibroBiblioteca elemento) {
+        return elemento.getLibro().getGenero();
     }
     
 }

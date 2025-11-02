@@ -4,19 +4,19 @@
  */
 package com.mycompany.bibliotecamagica.backend.comparadores;
 
-import com.mycompany.bibliotecamagica.backend.modelos.ListaLibros;
+import com.mycompany.bibliotecamagica.backend.modelos.LibroBiblioteca;
 import java.util.Comparator;
 
 /**
  *
  * @author rafael-cayax
  */
-public class ComparadorTitulo extends Comparador implements Comparator<ListaLibros>{
+public class ComparadorTitulo extends Comparador implements Comparator<LibroBiblioteca>{
 
     @Override
-    public int compare(ListaLibros o1, ListaLibros o2) {
-        return compararEspañol(o1.obtenerPrimero().getLibro().getTitulo(), 
-                o2.obtenerPrimero().getLibro().getTitulo());
+    public int compare(LibroBiblioteca o1, LibroBiblioteca o2) {
+        return compararEspañol(o1.getLibro().getTitulo(), 
+                o2.getLibro().getTitulo());
     }
     
 }

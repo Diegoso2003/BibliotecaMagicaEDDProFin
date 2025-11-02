@@ -4,130 +4,116 @@
  */
 package com.mycompany.bibliotecamagica.backend.estructuras.tabla_hash;
 
-import java.util.Optional;
+import com.mycompany.bibliotecamagica.backend.modelos.InfoLibro;
+import com.mycompany.bibliotecamagica.backend.modelos.Libro;
+import com.mycompany.bibliotecamagica.backend.modelos.LibroBiblioteca;
 
 /**
  *
  * @author rafael-cayax
  */
-public class TablaHash<K, V> {
+public class TablaHash {
 
-    private static final float FACTOR_DE_CARGA = 0.75f;
-    private NodoHash<K, V>[] tabla = new NodoHash[16];
-    private int numElementos = 0;
+    private static final float FACTOR_CARGA = 0.8f;
+    private static final int[] PRIMOS = {17, 37, 79, 163, 331, 673, 1361};
+    private int posicion = 0;
+    private int numLibros = 0;
+    private NodoHash[] libros;
 
-    public void agregar(K clave, V valor) {
-        int indice = obtenerIndice(obtenerHash(clave));
-        NodoHash<K, V> nuevo = crearNodo(clave, valor);
-        if (agregarNodo(nuevo, indice)) {
-            numElementos++;
-            if (debeRedimensionarse()) {
-                redimensionar();
-            }
+    public TablaHash() {
+        libros = new NodoHash[PRIMOS[posicion]];
+    }
+
+    public boolean agregar(InfoLibro libro) {
+        int indice = obtenerIndice(libro.getLibro());
+        NodoHash nodo = libros[indice];
+        numLibros++;
+        if (nodo == null) {
+            LibroBiblioteca nuevo = new LibroBiblioteca(libro);
+            libros[indice] = new NodoHash(nuevo);
+            verificarFactorCarga();
+            return true;
         }
-    }
-
-    public int getNumElementos() {
-        return numElementos;
-    }
-
-    public boolean estaVacia() {
-        return numElementos == 0;
-    }
-
-    private int obtenerIndice(int hash) {
-        return hash % tabla.length;
-    }
-
-    private int obtenerHash(K clave) {
-        if (clave == null) {
-            return 0;
-        }
-        String s = clave.toString();
-        int h = 0;
-        for (int i = 0; i < s.length(); i++) {
-            h = 31 * h + s.charAt(i);
-        }
-        return h;
-    }
-
-    private NodoHash<K, V> crearNodo(K clave, V valor) {
-        return new NodoHash<>(clave, valor, obtenerHash(clave));
-    }
-
-    private boolean debeRedimensionarse() {
-        return ((float) numElementos / tabla.length) > FACTOR_DE_CARGA;
-    }
-
-    private void redimensionar() {
-        NodoHash<K, V> vieja[] = tabla;
-        NodoHash<K, V> nuevaTabla[] = new NodoHash[tabla.length * 2];
-        tabla = nuevaTabla;
-        NodoHash<K, V> auxiliar;
-        for (int i = 0; i < vieja.length; i++) {
-            if (vieja[i] != null) {
-                NodoHash<K, V> nodo = vieja[i];
-                while (nodo != null) {
-                    auxiliar = nodo.getSiguiente();
-                    nodo.setSiguiente(null);
-                    agregarNodo(nodo, obtenerIndice(nodo.getHash()));
-                    nodo = auxiliar;
-                }
-            }
-        }
-    }
-
-    private boolean agregarNodo(NodoHash<K, V> nodo, int indice) {
-        NodoHash<K, V> actual = tabla[indice];
-        if (actual == null) {
-            tabla[indice] = nodo;
-        } else {
-            NodoHash<K, V> anterior = null;
-            while (actual != null) {
-                if (actual.getHash() == nodo.getHash() && (actual.getClave() == nodo.getClave()
-                        || actual.getClave().equals(nodo.getClave()))) {
-                    actual.setValor(nodo.getValor());
-                    return false;
-                }
-                anterior = actual;
-                actual = actual.getSiguiente();
-            }
-            anterior.setSiguiente(nodo);
-        }
-        return true;
-    }
-
-    public Optional<V> obtenerValor(K clave) {
-        int hash = obtenerHash(clave);
-        NodoHash<K, V> nodo = tabla[obtenerIndice(hash)];
-        while (nodo != null) {
-            if (nodo.getHash() == hash && (nodo.getClave() == clave || clave.equals(nodo.getClave()))) {
-                return Optional.of(nodo.getValor());
-            }
-        }
-        return Optional.empty();
-    }
-
-    public V eliminar(K clave) {
-        int hash = obtenerHash(clave);
-        int indice = obtenerIndice(hash);
-        NodoHash<K, V> nodo = tabla[indice];
-        if (nodo.getHash() == hash && (nodo.getClave() == clave || clave.equals(nodo.getClave()))) {
-            tabla[indice] = nodo.getSiguiente();
-            numElementos--;
-            return nodo.getValor();
-        }
-        NodoHash<K, V> anterior = nodo;
-        nodo = nodo.getSiguiente();
-        while (nodo != null) {
-            if (nodo.getHash() == hash && (nodo.getClave() == clave || clave.equals(nodo.getClave()))) {
-                anterior.setSiguiente(nodo.getSiguiente());
-                numElementos--;
-                return nodo.getValor();
+        NodoHash anterior = null;
+        do {
+            if (nodo.getLibro().getLibro().equals(libro.getLibro())) {
+                nodo.getLibro().aumentarIndices(libro);
+                numLibros--;
+                return false;
             }
             anterior = nodo;
             nodo = nodo.getSiguiente();
+        } while (nodo != null);
+        LibroBiblioteca nuevo = new LibroBiblioteca(libro);
+        anterior.setSiguiente(new NodoHash(nuevo));
+        verificarFactorCarga();
+        return true;
+    }
+
+    private int obtenerIndice(Libro libro) {
+        Long valor = Long.valueOf(libro.getSinGuiones().substring(3));
+        double A = 0.6180339887;
+        double fraccion = (valor * A) % 1;
+        return (int) (libros.length * fraccion);
+    }
+
+    private void verificarFactorCarga() {
+        if (factorCarga() >= FACTOR_CARGA) {
+            redimensionar();
         }
+    }
+
+    private double factorCarga() {
+        return (double) numLibros / libros.length;
+    }
+
+    public String obtenerDotTabla(){
+        GeneradorDotTablaHash generador = new GeneradorDotTablaHash();
+        return generador.getDotTablaHash(libros, factorCarga());
+    }
+    
+    private void redimensionar() {
+        if (posicion < PRIMOS.length - 1) {
+            NodoHash[] vieja = libros;
+            NodoHash[] nueva = new NodoHash[PRIMOS[++posicion]];
+            libros = nueva;
+            for (NodoHash nodo : vieja) {
+                if(nodo != null){
+                    agregar(nodo.getLibro());
+                    while(nodo.getSiguiente() != null){
+                        nodo = nodo.getSiguiente();
+                        agregar(nodo.getLibro());
+                    }
+                }
+            }
+        }
+    }
+    
+    private void agregar(LibroBiblioteca libro){
+        int indice = obtenerIndice(libro.getLibro());
+        NodoHash nodo = libros[indice];
+        if(nodo == null){
+            libros[indice] = new NodoHash(libro);
+        } else {
+            while(nodo.getSiguiente() != null){
+                nodo = nodo.getSiguiente();
+            }
+            nodo.setSiguiente(new NodoHash(libro));
+        }
+    }
+    
+    public LibroBiblioteca buscar(Libro libro){
+        int indice = obtenerIndice(libro);
+        NodoHash nodo = libros[indice];
+        if(nodo == null){
+            return null;
+        }
+        do{
+            if(nodo.getLibro().getLibro().equals(libro)){
+                return nodo.getLibro();
+            }
+            nodo = nodo.getSiguiente();
+        } while(nodo != null);
         return null;
     }
 }

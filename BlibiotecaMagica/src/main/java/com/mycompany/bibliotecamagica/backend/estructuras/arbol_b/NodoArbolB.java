@@ -120,5 +120,9 @@ public class NodoArbolB<T extends Comparable> {
     public int getNumeroClaves() {
         return numeroClaves;
     }
+
+    public void setNumeroClaves(int numeroClaves) {
+        this.numeroClaves = numeroClaves;
+    }
     
 }

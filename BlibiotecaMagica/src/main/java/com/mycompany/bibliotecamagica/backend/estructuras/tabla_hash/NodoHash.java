@@ -4,44 +4,30 @@
  */
 package com.mycompany.bibliotecamagica.backend.estructuras.tabla_hash;
 
+import com.mycompany.bibliotecamagica.backend.modelos.LibroBiblioteca;
+
 /**
  *
  * @author rafael-cayax
  */
-public class NodoHash<K, V> {
-    private final K clave;
-    private V valor;
-    private final int hash;
-    private NodoHash<K, V> siguiente;
+public class NodoHash {
+    private final LibroBiblioteca libro;
+    private NodoHash siguiente;
 
-    public NodoHash(K clave, V valor, int hash) {
-        this.clave = clave;
-        this.valor = valor;
-        this.hash = hash;
+    public NodoHash(LibroBiblioteca libro) {
+        this.libro = libro;
     }
 
-    public NodoHash<K, V> getSiguiente() {
-        return siguiente;
-    }
-
-    public void setSiguiente(NodoHash<K, V> siguiente) {
+    public void setSiguiente(NodoHash siguiente) {
         this.siguiente = siguiente;
     }
 
-    public K getClave() {
-        return clave;
+    public LibroBiblioteca getLibro() {
+        return libro;
     }
 
-    public V getValor() {
-        return valor;
-    }
-
-    public int getHash() {
-        return hash;
-    }
-
-    public void setValor(V valor) {
-        this.valor = valor;
+    public NodoHash getSiguiente() {
+        return siguiente;
     }
     
 }

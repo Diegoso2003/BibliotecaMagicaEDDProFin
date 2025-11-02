@@ -12,8 +12,8 @@ import java.math.BigDecimal;
  * @author rafael-cayax
  */
 public class VarGlobales {
-    public static final int MIN_TIEMPO = 1_000;
-    public static final int MAX_TIEMPO = 60_000;
+    public static final int MIN_TIEMPO = 100;
+    public static final int MAX_TIEMPO = 100_000;
     public static final int TIEMPO_DEFAULT = 5_000;
     public static final int INCREMENTO = 100;
     public static final int MIN_AÑO = 1;

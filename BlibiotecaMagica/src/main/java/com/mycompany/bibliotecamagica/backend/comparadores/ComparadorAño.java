@@ -4,18 +4,19 @@
  */
 package com.mycompany.bibliotecamagica.backend.comparadores;
 
-import com.mycompany.bibliotecamagica.backend.modelos.Libro;
+import com.mycompany.bibliotecamagica.backend.modelos.LibroBiblioteca;
 import java.util.Comparator;
 
 /**
  *
  * @author rafael-cayax
  */
-public class ComparadorAño extends Comparador implements Comparator<Libro>{
+public class ComparadorAño extends Comparador implements Comparator<LibroBiblioteca>{
 
     @Override
-    public int compare(Libro o1, Libro o2) {
-        return o1.getAño().compareTo(o2.getAño());
+    public int compare(LibroBiblioteca o1, LibroBiblioteca o2) {
+        return o1.getLibro().getAño()
+                .compareTo(o2.getLibro().getAño());
     }
     
 }

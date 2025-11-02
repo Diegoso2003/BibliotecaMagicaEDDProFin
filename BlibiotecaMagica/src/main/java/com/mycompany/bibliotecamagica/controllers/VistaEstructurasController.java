@@ -62,14 +62,10 @@ public class VistaEstructurasController implements Initializable {
                 String auxiliar = "";
                 switch(estructuraSeleccionada){
                     case ARBOL_AUTOR -> auxiliar = bibliotecaSeleccionada.obtenerDotBMasAutor();
-                    case ARBOL_AÑO -> {
-                        
-                    }
+                    case ARBOL_AÑO -> auxiliar = bibliotecaSeleccionada.obtenerDotBAño();
                     case ARBOL_GENERO -> auxiliar = bibliotecaSeleccionada.obtenerDotBMasGenero();
                     case ARBOL_TITULO -> auxiliar = bibliotecaSeleccionada.obtenerDotAvl();
-                    default -> {
-                        
-                    }
+                    default -> auxiliar = bibliotecaSeleccionada.obtenerDotTabla();
                 }
                 GeneradorSvg generador = new GeneradorSvg(auxiliar);
                 svg = generador.generarSVG();

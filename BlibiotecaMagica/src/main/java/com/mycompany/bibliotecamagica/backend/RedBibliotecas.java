@@ -9,8 +9,10 @@ import com.mycompany.bibliotecamagica.backend.calculo_ruta.InfoTraslado;
 import com.mycompany.bibliotecamagica.backend.estructuras.grafo.NodoGrafo;
 import com.mycompany.bibliotecamagica.backend.estructuras.lista_doble.ListaDoble;
 import com.mycompany.bibliotecamagica.backend.modelos.Biblioteca;
+import com.mycompany.bibliotecamagica.backend.modelos.Libro;
 import com.mycompany.bibliotecamagica.hilos.ManejadorColas;
 import java.util.Optional;
+import java.util.TreeMap;
 
 /**
  *
@@ -21,12 +23,14 @@ public enum RedBibliotecas {
     
     private final ListaDoble<NodoGrafo> bibliotecas;
     private final ListaDoble<InfoTraslado> traslados;
+    private TreeMap<String, Libro> libros;
     private final Dijsktra d;
     private ManejadorColas manejador;
 
     private RedBibliotecas() {
         bibliotecas = new ListaDoble<>(false);
         traslados = new ListaDoble<>(true);
+        libros = new TreeMap<>();
         d = new Dijsktra();
         manejador = new ManejadorColas();
     }
@@ -74,6 +78,10 @@ public enum RedBibliotecas {
 
     public Dijsktra getD() {
         return d;
+    }
+
+    public TreeMap<String, Libro> getLibros() {
+        return libros;
     }
     
 }

@@ -7,8 +7,7 @@ package com.mycompany.bibliotecamagica.backend.estructuras.arbol_b;
 import com.mycompany.bibliotecamagica.backend.comparadores.ComparadorAño;
 import com.mycompany.bibliotecamagica.backend.estructuras.lista_doble.ListaDoble;
 import com.mycompany.bibliotecamagica.backend.estructuras.lista_simple.ListaSimple;
-import com.mycompany.bibliotecamagica.backend.modelos.Libro;
-import com.mycompany.bibliotecamagica.backend.modelos.ListaLibros;
+import com.mycompany.bibliotecamagica.backend.modelos.LibroBiblioteca;
 
 /**
  *
@@ -16,52 +15,74 @@ import com.mycompany.bibliotecamagica.backend.modelos.ListaLibros;
  */
 public class ArbolB {
     private final ComparadorAño comparador;
-    private NodoArbolB<ListaLibros> raiz;
+    private NodoArbolB<LibroBiblioteca> raiz;
     private static final int ORDEN_ARBOL = 3;
     private static final int MAX_ELEMENTOS = 2 *ORDEN_ARBOL;
     private int numElementos = 0;
 
     public ArbolB() {
         this.comparador = new ComparadorAño();
+        raiz = new NodoArbolB(ORDEN_ARBOL, comparador);
     }
     
     private void dividirRaiz(){
-        
+        var nuevo = new NodoArbolB(ORDEN_ARBOL, comparador);
+        NodoArbolB<LibroBiblioteca>[] hijos = nuevo.getHijos();
+        ListaDoble<LibroBiblioteca>[] claves = nuevo.getClaves();
+        hijos[0] = raiz;
+        hijos[1] = raiz.obtenerNuevoDerecho();
+        claves[0] = raiz.obtenerMedio();
+        raiz = nuevo;
+        raiz.setEsHoja(false);
+        raiz.setNumeroClaves(1);
     }
     
     private void agregarListaElementos(AuxiliarBusquedaB aux, NodoArbolB nodo){
         
     }
     
-    private void agregarElemento(NodoArbolB<ListaLibros> nodo, ListaLibros nuevo){
+    private void agregarElemento(NodoArbolB<LibroBiblioteca> nodo, LibroBiblioteca nuevo){
         if(nodo.esNodoHoja()){
             nodo.agregarElemento(nuevo);
             return;
         }
-        ListaDoble<ListaLibros> []libros = nodo.getClaves();
-        NodoArbolB<ListaLibros> []hijos = nodo.getHijos();
+        ListaDoble<LibroBiblioteca> []libros = nodo.getClaves();
+        NodoArbolB<LibroBiblioteca> []hijos = nodo.getHijos();
         for(int i = 0; i <= nodo.getNumeroClaves(); i++){
-            Libro[] claves;
-            if(libros[i] != null && comparador.compare(nuevo.obtenerPrimero().getLibro(), 
-                    libros[i].obtenerPrimero().obtenerPrimero().getLibro()) == 0){
-                
+            if(libros[i] != null && comparador.compare(nuevo, 
+                    libros[i].obtenerPrimero()) == 0){
+                libros[i].agregar(nuevo);
+                break;
+            }
+            if(libros[i] == null || comparador.compare(nuevo, libros[i].obtenerPrimero()) < 0){
+                agregarElemento(hijos[i], nuevo);
+                if(hijos[i].getNumeroClaves() > MAX_ELEMENTOS){
+                    nodo.dividirNodoHijo(i);
+                }
+                break;
             }
         }
     }
     
-    public void agregarLibro(ListaLibros nuevo){
-        
+    public void agregarLibro(LibroBiblioteca nuevo){
+        agregarElemento(raiz, nuevo);
+        if(raiz.getNumeroClaves() > MAX_ELEMENTOS){
+            dividirRaiz();
+        }
     }
     
     public String obtenerDotAño(){
-        return "";
+        GeneradorDotB gen = new GeneradorDotB();
+        return gen.generar(raiz);
     }
     
     public boolean estaVacia(){
         return numElementos == 0;
     }
     
-    public ListaSimple<ListaLibros> obtenerListaPorRango(String texto){
-        
+    public ListaSimple<LibroBiblioteca> obtenerListaPorRango(String texto){
+        int fechas[] = {-1, -1};
+        var lista = new ListaSimple<LibroBiblioteca>();
+        return lista;
     }
 }

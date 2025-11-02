@@ -117,10 +117,22 @@ public class ValidadorLibro extends Validador<InfoLibro>{
 
     public Libro obtenerLibro() throws EntradaException {
         Libro libro = new Libro(isbn.toString());
+        Libro libro2 = RedBibliotecas.INSTANCIA.getLibros().get(libro.getSinGuiones());
         libro.setAutor(autor.toString());
         libro.setAño(obtenerAño());
         libro.setGenero(genero.toString());
         libro.setTitulo(titulo.toString());
+        if(libro2 != null){
+            if(!libro2.getAutor().equalsIgnoreCase(libro.getAutor()) ||
+                    !libro2.getAño().equals(libro.getAño()) || 
+                    !libro2.getGenero().equalsIgnoreCase(libro.getGenero()) ||
+                    !libro2.getTitulo().equalsIgnoreCase(libro.getTitulo())){
+                throw new EntradaException("Ya hay un libro registrado con el mismo isbn y diferentes datos");
+            }
+            libro = libro2;
+        } else {
+            RedBibliotecas.INSTANCIA.getLibros().put(libro.getSinGuiones(), libro);
+        }
         return libro;
     }
 

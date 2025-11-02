@@ -91,6 +91,10 @@ public class ObtenerDotGrafo {
             if(primero != null){
                 conexionTabla.append("\n").append(TABLA).append(":").append(id)
                     .append(FLECHA).append(id).append(primero).append(";");
+            }  else {
+                infoConexiones.append(" inv").append(id).append(" [style=invis label=\"  \\n  \\n  \\n  \"];\n");
+                conexionTabla.append("\n").append(TABLA).append(":").append(id)
+                        .append(FLECHA).append("inv").append(id).append(" [style=invis];");
             }
         }
     }
