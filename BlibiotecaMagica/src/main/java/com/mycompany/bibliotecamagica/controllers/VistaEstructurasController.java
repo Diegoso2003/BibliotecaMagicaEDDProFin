@@ -61,15 +61,11 @@ public class VistaEstructurasController implements Initializable {
             try {
                 String auxiliar = "";
                 switch(estructuraSeleccionada){
-                    case ARBOL_AUTOR -> {
-                        
-                    }
+                    case ARBOL_AUTOR -> auxiliar = bibliotecaSeleccionada.obtenerDotBMasAutor();
                     case ARBOL_AÑO -> {
                         
                     }
-                    case ARBOL_GENERO -> {
-                        
-                    }
+                    case ARBOL_GENERO -> auxiliar = bibliotecaSeleccionada.obtenerDotBMasGenero();
                     case ARBOL_TITULO -> auxiliar = bibliotecaSeleccionada.obtenerDotAvl();
                     default -> {
                         

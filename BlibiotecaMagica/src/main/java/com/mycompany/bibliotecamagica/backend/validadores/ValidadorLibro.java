@@ -107,7 +107,7 @@ public class ValidadorLibro extends Validador<InfoLibro>{
             if(año.charAt(0) == '0') throw new NumberFormatException();
             int añoint =  Integer.parseInt(año.toString());
             if(añoint < VarGlobales.MIN_AÑO){
-                throw new EntradaException(String.format("El año debe ser mayor a: %,d, año ingresado: %,d",VarGlobales.MIN_AÑO,año));
+                throw new EntradaException(String.format("El año debe ser mayor a: %,d, año ingresado: %,d",VarGlobales.MIN_AÑO,añoint));
             }
             return añoint;
         } catch(NumberFormatException e){

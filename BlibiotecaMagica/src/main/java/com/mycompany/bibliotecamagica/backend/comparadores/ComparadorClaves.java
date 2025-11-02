@@ -4,18 +4,17 @@
  */
 package com.mycompany.bibliotecamagica.backend.comparadores;
 
-import com.mycompany.bibliotecamagica.backend.modelos.Libro;
 import java.util.Comparator;
 
 /**
  *
  * @author rafael-cayax
  */
-public class ComparadorAutor extends Comparador implements Comparator<Libro>{
+public class ComparadorClaves extends Comparador implements Comparator<String>{
 
     @Override
-    public int compare(Libro o1, Libro o2) {
-        return compararEspañol(o1.getAutor(), o2.getAutor());
+    public int compare(String o1, String o2) {
+        return compararEspañol(o1, o2);
     }
     
 }

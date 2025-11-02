@@ -4,18 +4,17 @@
  */
 package com.mycompany.bibliotecamagica.backend.comparadores;
 
-import com.mycompany.bibliotecamagica.backend.modelos.Libro;
-import java.util.Comparator;
+import com.mycompany.bibliotecamagica.backend.modelos.ListaLibros;
 
 /**
  *
  * @author rafael-cayax
  */
-public class ComparadorGenero extends Comparador implements Comparator<Libro>{
+public class IdentificadorAutor implements Identificable<ListaLibros>{
 
     @Override
-    public int compare(Libro o1, Libro o2) {
-        return compararEspañol(o1.getGenero(), o2.getGenero());
+    public String getClave(ListaLibros elemento) {
+        return elemento.obtenerPrimero().getLibro().getAutor();
     }
     
 }

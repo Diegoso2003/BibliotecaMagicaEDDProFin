@@ -130,4 +130,8 @@ public class ListaDoble<T extends Comparable> extends ListaSimple<T>{
         if(actual.compareTo(nodo) == 0) return Optional.of(actual.getElemento());
         return Optional.empty();
     }
+    
+    public void eliminar(T elemento){
+        
+    }
 }

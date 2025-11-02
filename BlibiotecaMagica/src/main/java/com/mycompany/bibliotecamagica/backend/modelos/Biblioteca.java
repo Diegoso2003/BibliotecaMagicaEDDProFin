@@ -5,8 +5,11 @@
 package com.mycompany.bibliotecamagica.backend.modelos;
 
 import com.mycompany.bibliotecamagica.backend.VarGlobales;
+import com.mycompany.bibliotecamagica.backend.comparadores.IdentificadorAutor;
+import com.mycompany.bibliotecamagica.backend.comparadores.IdentificadorGenero;
 import com.mycompany.bibliotecamagica.backend.estructuras.arbol_avl.ArbolAvl;
 import com.mycompany.bibliotecamagica.backend.estructuras.arbol_avl.GeneradorDotAvl;
+import com.mycompany.bibliotecamagica.backend.estructuras.arbol_b_mas.ArbolBMas;
 import com.mycompany.bibliotecamagica.frontend.BibliotecaFrontend;
 import java.util.Objects;
 
@@ -22,12 +25,16 @@ public class Biblioteca implements Comparable<Biblioteca>{
     private EstadoCola tIngreso;
     private EstadoCola tTraspaso;
     private EstadoCola despacho;
-    private ArbolAvl<InfoLibro> librosPorTitulo;
+    private ArbolAvl<ListaLibros> librosPorTitulo;
+    private ArbolBMas<ListaLibros> librosPorGenero;
+    private ArbolBMas<ListaLibros> librosPorAutor;
 
     public Biblioteca(String id, String nombre) {
         this.id = id;
         this.nombre = nombre;
         biblioColas = new BibliotecaFrontend(this);
+        librosPorGenero = new ArbolBMas<>(new IdentificadorGenero());
+        librosPorAutor = new ArbolBMas<>(new IdentificadorAutor());
         librosPorTitulo = new ArbolAvl<>(VarGlobales.COM_TITULO);
     }
     
@@ -42,7 +49,12 @@ public class Biblioteca implements Comparable<Biblioteca>{
 
     
     public void agregarLibro(InfoLibro libro){
-        librosPorTitulo.agregarElemento(libro);
+        //agregar validacion para agregar
+        ListaLibros lista = new ListaLibros();
+        lista.agregar(libro);
+        librosPorTitulo.agregarElemento(lista);
+        librosPorGenero.agregarElemento(lista);
+        librosPorAutor.agregarElemento(lista);
     }
     
     public String getId() {
@@ -127,6 +139,14 @@ public class Biblioteca implements Comparable<Biblioteca>{
     public String obtenerDotAvl(){
         GeneradorDotAvl generador = new GeneradorDotAvl();
         return generador.obtenerDot(librosPorTitulo.getRaiz());
+    }
+    
+    public String obtenerDotBMasGenero(){
+        return librosPorGenero.obtenerDotArbolBMas();
+    }
+    
+    public String obtenerDotBMasAutor(){
+        return librosPorAutor.obtenerDotArbolBMas();
     }
     
     @Override

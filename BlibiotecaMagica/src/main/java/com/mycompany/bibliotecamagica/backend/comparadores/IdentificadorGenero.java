@@ -5,18 +5,16 @@
 package com.mycompany.bibliotecamagica.backend.comparadores;
 
 import com.mycompany.bibliotecamagica.backend.modelos.ListaLibros;
-import java.util.Comparator;
 
 /**
  *
  * @author rafael-cayax
  */
-public class ComparadorTitulo extends Comparador implements Comparator<ListaLibros>{
+public class IdentificadorGenero implements Identificable<ListaLibros> {
 
     @Override
-    public int compare(ListaLibros o1, ListaLibros o2) {
-        return compararEspañol(o1.obtenerPrimero().getLibro().getTitulo(), 
-                o2.obtenerPrimero().getLibro().getTitulo());
+    public String getClave(ListaLibros elemento) {
+        return elemento.obtenerPrimero().getLibro().getGenero();
     }
     
 }
