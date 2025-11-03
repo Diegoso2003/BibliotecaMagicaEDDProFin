@@ -5,13 +5,18 @@
 package com.mycompany.bibliotecamagica.backend.modelos;
 
 import com.mycompany.bibliotecamagica.backend.VarGlobales;
+import com.mycompany.bibliotecamagica.backend.comparadores.ComparadorClaves;
 import com.mycompany.bibliotecamagica.backend.comparadores.IdentificadorAutor;
 import com.mycompany.bibliotecamagica.backend.comparadores.IdentificadorGenero;
 import com.mycompany.bibliotecamagica.backend.estructuras.arbol_avl.ArbolAvl;
 import com.mycompany.bibliotecamagica.backend.estructuras.arbol_avl.GeneradorDotAvl;
 import com.mycompany.bibliotecamagica.backend.estructuras.arbol_b.ArbolB;
 import com.mycompany.bibliotecamagica.backend.estructuras.arbol_b_mas.ArbolBMas;
+import com.mycompany.bibliotecamagica.backend.estructuras.lista_doble.ListaDoble;
+import com.mycompany.bibliotecamagica.backend.estructuras.lista_simple.ListaSimple;
 import com.mycompany.bibliotecamagica.backend.estructuras.tabla_hash.TablaHash;
+import com.mycompany.bibliotecamagica.backend.exception.EntradaException;
+import com.mycompany.bibliotecamagica.backend.iterador.IteradorLista;
 import com.mycompany.bibliotecamagica.frontend.BibliotecaFrontend;
 import java.util.Objects;
 
@@ -30,6 +35,7 @@ public class Biblioteca implements Comparable<Biblioteca>{
     private ArbolAvl<LibroBiblioteca> librosPorTitulo;
     private ArbolBMas<LibroBiblioteca> librosPorGenero;
     private ArbolBMas<LibroBiblioteca> librosPorAutor;
+    private ListaSimple<LibroBiblioteca> librosLista;
     private ArbolB librosPorAño;
     private TablaHash tabla;
 
@@ -38,6 +44,7 @@ public class Biblioteca implements Comparable<Biblioteca>{
         this.nombre = nombre;
         biblioColas = new BibliotecaFrontend(this);
         librosPorAño = new ArbolB();
+        librosLista = new ListaSimple();
         librosPorGenero = new ArbolBMas<>(new IdentificadorGenero());
         librosPorAutor = new ArbolBMas<>(new IdentificadorAutor());
         librosPorTitulo = new ArbolAvl<>(VarGlobales.COM_TITULO);
@@ -159,9 +166,48 @@ public class Biblioteca implements Comparable<Biblioteca>{
     public String obtenerDotBAño(){
         return librosPorAño.obtenerDotAño();
     }
+
+    public ListaSimple<LibroBiblioteca> getLibrosLista() {
+        return librosLista;
+    }
     
     public String obtenerDotTabla(){
         return tabla.obtenerDotTabla();
+    }
+    
+    public ListaDoble<LibroBiblioteca> buscarPorTitulo(String titulo) throws EntradaException{
+        if(librosPorTitulo.estaVacia()){
+            throw new EntradaException("biblioteca vacia ingresar libros para busqueda");
+        }
+        Libro libroAux = new Libro(null);
+        libroAux.setTitulo(titulo);
+        return librosPorTitulo.buscar(new LibroBiblioteca(libroAux));
+    }
+    
+    public ListaDoble<LibroBiblioteca> buscarPorGenero(String genero) throws EntradaException{
+        if(librosPorGenero.estaVacia()){
+            throw new EntradaException("biblioteca vacia ingresar libros para busqueda");
+        }
+        Libro libroAux = new Libro(null);
+        libroAux.setGenero(genero);
+        return librosPorGenero.buscar(new LibroBiblioteca(libroAux));
+    }
+    
+    public ListaDoble<LibroBiblioteca> buscarPorAutor(String autor) throws EntradaException{
+        if(librosPorAutor.estaVacia()){
+            throw new EntradaException("biblioteca vacia ingresar libros para busqueda");
+        }
+        Libro libroAux = new Libro(null);
+        libroAux.setAutor(autor);
+        return librosPorAutor.buscar(new LibroBiblioteca(libroAux));
+    }
+    
+    public LibroBiblioteca buscarPorIsbn(String isbn) throws EntradaException{
+        if(tabla.estaVacia()){
+            throw new EntradaException("biblioteca vacia ingresar libros para busqueda");
+        }
+        Libro libroAux = new Libro(isbn);
+        return tabla.buscar(libroAux);
     }
     
     @Override
@@ -194,6 +240,19 @@ public class Biblioteca implements Comparable<Biblioteca>{
         }
         final Biblioteca other = (Biblioteca) obj;
         return Objects.equals(this.id, other.id);
+    }
+
+    public void buscarPorTituloLista(String entrada) {
+        ComparadorClaves comparador = new ComparadorClaves();
+        Libro libroAux = new Libro(null);
+        libroAux.setTitulo(entrada);
+        LibroBiblioteca libro = new LibroBiblioteca(libroAux);
+        IteradorLista<LibroBiblioteca> l = this.librosLista.getIterador();
+        while(l.haySiguiente()){
+            if(comparador.compare(libro.getLibro().getTitulo(), l.getActual().getLibro().getTitulo()) == 0){
+                break;
+            }
+        }
     }
     
 }

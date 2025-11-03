@@ -6,15 +6,18 @@ package com.mycompany.bibliotecamagica.backend.comparadores;
 
 import java.util.Comparator;
 
+
 /**
  *
  * @author rafael-cayax
  */
-public class ComparadorClaves extends Comparador implements Comparator<String>{
+public class ComparadorClaves implements Comparator<String>{
 
     @Override
     public int compare(String o1, String o2) {
-        return compararEspañol(o1, o2);
+        o1 = o1.toLowerCase();
+        o2 = o2.toLowerCase();
+        return o1.compareTo(o2);
     }
     
 }

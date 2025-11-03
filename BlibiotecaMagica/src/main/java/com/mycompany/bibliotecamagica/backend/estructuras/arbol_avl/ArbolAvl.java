@@ -4,6 +4,7 @@
  */
 package com.mycompany.bibliotecamagica.backend.estructuras.arbol_avl;
 
+import com.mycompany.bibliotecamagica.backend.estructuras.lista_doble.ListaDoble;
 import java.util.Comparator;
 
 /**
@@ -127,5 +128,21 @@ public class ArbolAvl<T extends Comparable> {
         nodo2.recalcularAltura();
         return nodo2;
     }
+
+    private NodoAvl<T> buscarNodo(NodoAvl<T> nodo, T elemento){
+        if(nodo == null) return null;
+        int resultado = comparador.compare(elemento, nodo.obtenerPrimero());
+        if(resultado < 0){
+            return buscarNodo(nodo.getIzquierda(), elemento);
+        }
+        if(resultado > 0){
+            return buscarNodo(nodo.getDerecha(), elemento);
+        }
+        return nodo;
+    }
     
+    public ListaDoble<T> buscar(T elemento){
+        NodoAvl<T> nodo;
+        return (nodo = buscarNodo(raiz, elemento)) == null ? null : nodo.getLista();
+    }
 }

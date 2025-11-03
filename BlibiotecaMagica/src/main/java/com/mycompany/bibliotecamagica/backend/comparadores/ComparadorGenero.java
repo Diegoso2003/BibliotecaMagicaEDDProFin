@@ -5,18 +5,16 @@
 package com.mycompany.bibliotecamagica.backend.comparadores;
 
 import com.mycompany.bibliotecamagica.backend.modelos.LibroBiblioteca;
-import java.util.Comparator;
-
 
 /**
  *
  * @author rafael-cayax
  */
-public abstract class Comparador  implements Comparator<LibroBiblioteca>{
+public class ComparadorGenero extends Comparador{
 
-    protected int compararEspañol(String str1, String str2) {
-        str1 = str1.toLowerCase();
-        str2 = str2.toLowerCase();
-        return str1.compareTo(str2);
+    @Override
+    public int compare(LibroBiblioteca o1, LibroBiblioteca o2) {
+        return compararEspañol(o1.getLibro().getGenero(), o2.getLibro().getGenero());
     }
+    
 }

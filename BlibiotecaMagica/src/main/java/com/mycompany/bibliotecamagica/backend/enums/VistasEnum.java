@@ -9,6 +9,7 @@ package com.mycompany.bibliotecamagica.backend.enums;
  * @author rafael-cayax
  */
 public enum VistasEnum {
+    BUSQUEDA("busqueda"),
     CARGAR_ARCHIVO("carga_archivo"),
     COLAS_DESPACHO("colas_despacho"),
     FORM_BIBLIOTECA("form_biblioteca"),

@@ -84,6 +84,12 @@
                         <Button onAction="#cargarVistaEstructuras" text="Ver graficas" styleClass="nav-button"/>
                     </children>
                 </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="41.0" prefWidth="140.0" styleClass="nav-item">
+                    <children>
+                        <SVGPath content="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" fill="WHITE" />
+                        <Button onAction="#cargarBusquedas" text="Buscar Libro" styleClass="nav-button"/>
+                    </children>
+                </HBox>
             </children>
         </VBox>
     </left>

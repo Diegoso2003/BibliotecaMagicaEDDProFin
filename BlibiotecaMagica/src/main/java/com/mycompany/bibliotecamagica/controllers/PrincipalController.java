@@ -86,4 +86,9 @@ public class PrincipalController implements Initializable {
     private void cargarVistaEstructuras(){
         cargarVista(VistasEnum.VISTA_ESTRUCTURAS);
     }
+    
+    @FXML
+    private void cargarBusquedas(){
+        cargarVista(VistasEnum.BUSQUEDA);
+    }
 }

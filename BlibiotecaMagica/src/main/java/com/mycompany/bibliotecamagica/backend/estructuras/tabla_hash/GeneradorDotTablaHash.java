@@ -49,7 +49,6 @@ public class GeneradorDotTablaHash {
                 .append(conexionTabla)
                 .append("\narreglo:val -> nodo_invisible [style=invis];")
                 .append("}");
-        System.out.println(dot);
         return dot.toString();
     }
 

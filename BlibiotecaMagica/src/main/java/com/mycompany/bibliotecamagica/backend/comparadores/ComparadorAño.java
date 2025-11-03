@@ -5,13 +5,12 @@
 package com.mycompany.bibliotecamagica.backend.comparadores;
 
 import com.mycompany.bibliotecamagica.backend.modelos.LibroBiblioteca;
-import java.util.Comparator;
 
 /**
  *
  * @author rafael-cayax
  */
-public class ComparadorAño extends Comparador implements Comparator<LibroBiblioteca>{
+public class ComparadorAño extends Comparador{
 
     @Override
     public int compare(LibroBiblioteca o1, LibroBiblioteca o2) {

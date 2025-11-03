@@ -12,7 +12,7 @@ import static com.mycompany.bibliotecamagica.backend.enums.EstadoLibroEnum.EN_TR
  *
  * @author rafael-cayax
  */
-public class LibroBiblioteca implements Comparable<LibroBiblioteca>{
+public final class LibroBiblioteca implements Comparable<LibroBiblioteca>{
 
     private Libro libro;
     private int prestado = 0;
@@ -23,6 +23,14 @@ public class LibroBiblioteca implements Comparable<LibroBiblioteca>{
     public LibroBiblioteca(InfoLibro nuevo){
         libro = nuevo.getLibro();
         aumentarIndices(nuevo);
+    }
+    
+    /**
+     * constructor usado para busquedas
+     * @param libro 
+     */
+    public LibroBiblioteca(Libro libro){
+        this.libro = libro;
     }
     
     @Override

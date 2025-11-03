@@ -116,4 +116,8 @@ public class TablaHash {
         } while(nodo != null);
         return null;
     }
+    
+    public boolean estaVacia(){
+        return numLibros == 0;
+    }
 }
