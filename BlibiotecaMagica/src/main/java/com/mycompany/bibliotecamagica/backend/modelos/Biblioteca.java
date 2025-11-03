@@ -213,6 +213,10 @@ public class Biblioteca implements Comparable<Biblioteca>{
     public ArbolAvl<LibroBiblioteca> getLibrosPorTitulo() {
         return librosPorTitulo;
     }
+
+    public ArbolB getLibrosPorAño() {
+        return librosPorAño;
+    }
     
     @Override
     public int compareTo(Biblioteca o) {

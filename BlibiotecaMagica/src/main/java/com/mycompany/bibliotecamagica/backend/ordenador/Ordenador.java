@@ -25,6 +25,11 @@ public abstract class Ordenador {
     public String getMensaje() {
         return mensaje;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
     
     public LibroBiblioteca[] ordenar(Comparador comparador, ListaSimple<LibroBiblioteca> lista){
         LibroBiblioteca[] arreglo = new LibroBiblioteca[lista.getNumElementos()];
@@ -37,7 +42,7 @@ public abstract class Ordenador {
         arreglo = realizarAlgoritmo(arreglo, comparador);
         long termino = System.nanoTime();
         long tiempo = inicio - termino;
-        mensaje = "El algoritmo " + nombre + "tardo en " + comparador + tiempo + "us";
+        mensaje = "El algoritmo " + nombre + " tardo en " + comparador + " "+ tiempo + "us";
         return arreglo;
     }
     

@@ -37,8 +37,36 @@ public class ArbolB {
         raiz.setNumeroClaves(1);
     }
     
-    private void agregarListaElementos(AuxiliarBusquedaB aux, NodoArbolB nodo){
-        
+    private void agregarListaElementos(AuxiliarBusquedaB aux, NodoArbolB nodo) {
+        if (nodo == null) {
+            return;
+        }
+        ListaDoble<LibroBiblioteca>[] claves = nodo.getClaves();
+        NodoArbolB<LibroBiblioteca>[] hijos = nodo.getHijos();
+        for (int i = 0; i <= nodo.getNumeroClaves() && aux.seguirBuscando(); i++) {
+            if (claves[i] != null) {
+                int actual = claves[i].obtenerPrimero().getLibro().getAño();
+                if (actual >= aux.fechaInicio() && actual <= aux.fechaFin()) {
+                    if (actual != aux.fechaInicio()) {
+                        agregarListaElementos(aux, hijos[i]);
+                    }
+                    aux.getLista().agregarLista(claves[i]);
+                    if (actual == aux.fechaFin()) {
+                        aux.pararBusqueda();
+                    }
+                    continue;
+                }
+                if (nodo.esNodoHoja() && actual > aux.fechaFin()) {
+                    aux.pararBusqueda();
+                }
+            }
+            if (claves[i] == null || aux.fechaInicio() < claves[i].obtenerPrimero().getLibro().getAño()) {
+                agregarListaElementos(aux, hijos[i]);
+                if (aux.esFechaUnica()) {
+                    break;
+                }
+            }
+        }
     }
     
     private void agregarElemento(NodoArbolB<LibroBiblioteca> nodo, LibroBiblioteca nuevo){
@@ -85,4 +113,12 @@ public class ArbolB {
         var lista = new ListaSimple<LibroBiblioteca>();
         return lista;
     }
+
+    public ListaSimple<LibroBiblioteca> getListaPorRango(AuxiliarBusquedaB aux) {
+        ListaSimple<LibroBiblioteca> lista = new ListaSimple<>();
+        aux.setLista(lista);
+        agregarListaElementos(aux, raiz);
+        return lista;
+    }
+    
 }

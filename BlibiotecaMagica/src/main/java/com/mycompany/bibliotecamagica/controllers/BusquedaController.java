@@ -177,8 +177,10 @@ public class BusquedaController implements Initializable {
     private void realizarOrdenacion(){
         Ordenador orden = algoritmoOrden.getValue();
         Comparador comparador = ordenCampo.getValue();
+        if(orden == null || comparador == null) return;
         LibroBiblioteca[] ordenados = orden.ordenar(comparador, actual);
         datos.clear();
+        Auxiliar.lanzarAlerta(Alert.AlertType.INFORMATION, "Comparacion", orden.getMensaje(), campo);
         for(LibroBiblioteca biblio : ordenados){
             agregarLibro(biblio);
         }
