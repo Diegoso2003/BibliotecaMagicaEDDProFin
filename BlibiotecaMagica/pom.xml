@@ -50,7 +50,6 @@
                     <noManPages>true</noManPages>
                     <stripDebug>true</stripDebug>
                     <jlinkImageName>BibliotecaMagica</jlinkImageName>
-                    <jlinkZipName>BibliotecaMagica</jlinkZipName>
                 </configuration>
                 <executions>
                     <execution>
