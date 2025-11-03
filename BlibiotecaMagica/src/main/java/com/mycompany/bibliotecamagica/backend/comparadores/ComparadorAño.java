@@ -12,6 +12,10 @@ import com.mycompany.bibliotecamagica.backend.modelos.LibroBiblioteca;
  */
 public class ComparadorAño extends Comparador{
 
+    public ComparadorAño() {
+        super("Ordenar por año");
+    }
+
     @Override
     public int compare(LibroBiblioteca o1, LibroBiblioteca o2) {
         return o1.getLibro().getAño()

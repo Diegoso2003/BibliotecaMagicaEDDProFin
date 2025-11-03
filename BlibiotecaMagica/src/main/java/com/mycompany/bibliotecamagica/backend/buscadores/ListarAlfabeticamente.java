@@ -20,17 +20,16 @@ public class ListarAlfabeticamente extends Buscador{
 
     @Override
     protected void validarEntrada(String entrada) throws EntradaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     protected ListaSimple<LibroBiblioteca> obtenerBusqueda(String entrada) throws EntradaException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return biblioteca.getLibrosPorTitulo().obtenerInorden();
     }
 
     @Override
     public boolean obtenerMensaje() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return false;
     }
     
 }

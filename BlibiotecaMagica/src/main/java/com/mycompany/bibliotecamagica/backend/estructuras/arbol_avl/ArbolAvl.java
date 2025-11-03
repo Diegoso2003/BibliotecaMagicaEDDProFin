@@ -5,6 +5,7 @@
 package com.mycompany.bibliotecamagica.backend.estructuras.arbol_avl;
 
 import com.mycompany.bibliotecamagica.backend.estructuras.lista_doble.ListaDoble;
+import com.mycompany.bibliotecamagica.backend.estructuras.lista_simple.ListaSimple;
 import java.util.Comparator;
 
 /**
@@ -144,5 +145,20 @@ public class ArbolAvl<T extends Comparable> {
     public ListaDoble<T> buscar(T elemento){
         NodoAvl<T> nodo;
         return (nodo = buscarNodo(raiz, elemento)) == null ? null : nodo.getLista();
+    }
+    
+    private void agregarInorden(NodoAvl<T> nodo, ListaSimple<T> lista) {
+        if (nodo == null) {
+            return;
+        }
+        agregarInorden(nodo.getIzquierda(), lista);
+        lista.agregarLista(nodo.getLista());
+        agregarInorden(nodo.getDerecha(), lista);
+    }
+    
+    public ListaSimple<T> obtenerInorden(){
+        var lista = new ListaSimple<T>();
+        agregarInorden(raiz, lista);
+        return lista;
     }
 }

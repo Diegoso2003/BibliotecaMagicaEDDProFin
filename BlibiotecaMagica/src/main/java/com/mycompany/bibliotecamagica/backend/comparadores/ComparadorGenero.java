@@ -12,6 +12,10 @@ import com.mycompany.bibliotecamagica.backend.modelos.LibroBiblioteca;
  */
 public class ComparadorGenero extends Comparador{
 
+    public ComparadorGenero() {
+        super("Ordenar por genero");
+    }
+
     @Override
     public int compare(LibroBiblioteca o1, LibroBiblioteca o2) {
         return compararEspañol(o1.getLibro().getGenero(), o2.getLibro().getGenero());

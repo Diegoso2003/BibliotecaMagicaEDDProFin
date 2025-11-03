@@ -21,18 +21,18 @@
             <VBox alignment="CENTER" spacing="15.0">
                <children>
                   <Label text="Escoja el campo por el que se ordenara" />
-                  <ComboBox fx:id="ordenCampo" disable="true" prefWidth="300.0" />
+                  <ComboBox fx:id="ordenCampo" onAction="#verificarSeleccion" disable="true" prefWidth="300.0" />
                </children>
             </VBox>
             <VBox alignment="CENTER" spacing="15.0">
                <children>
                   <Label text="Seleccione el algoritmo para ordenar" />
-                  <ComboBox fx:id="algoritmoOrden" disable="true" prefWidth="300.0" />
+                  <ComboBox fx:id="algoritmoOrden" onAction="#verificarSeleccion"  disable="true" prefWidth="300.0" />
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="botonOrdenar" disable="true" mnemonicParsing="false" styleClass="btn-primary" text="Ordenar" />
+                  <Button fx:id="botonOrdenar" onAction="#realizarOrdenacion"  disable="true" mnemonicParsing="false" styleClass="btn-primary" text="Ordenar" />
                </children>
             </VBox>
          </children>

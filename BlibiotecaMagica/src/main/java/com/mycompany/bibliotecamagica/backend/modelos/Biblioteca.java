@@ -209,6 +209,10 @@ public class Biblioteca implements Comparable<Biblioteca>{
         Libro libroAux = new Libro(isbn);
         return tabla.buscar(libroAux);
     }
+
+    public ArbolAvl<LibroBiblioteca> getLibrosPorTitulo() {
+        return librosPorTitulo;
+    }
     
     @Override
     public int compareTo(Biblioteca o) {

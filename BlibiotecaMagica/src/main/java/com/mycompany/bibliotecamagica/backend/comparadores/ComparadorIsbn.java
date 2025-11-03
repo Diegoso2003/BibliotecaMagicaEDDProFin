@@ -12,6 +12,10 @@ import com.mycompany.bibliotecamagica.backend.modelos.LibroBiblioteca;
  */
 public class ComparadorIsbn extends Comparador{
 
+    public ComparadorIsbn() {
+        super("Ordenar por isbn");
+    }
+
     @Override
     public int compare(LibroBiblioteca o1, LibroBiblioteca o2) {
         return o1.getLibro().compareTo(o2.getLibro());

@@ -14,9 +14,21 @@ import java.util.Comparator;
  */
 public abstract class Comparador  implements Comparator<LibroBiblioteca>{
 
+    private final String nombre;
+
+    public Comparador(String nombre) {
+        this.nombre = nombre;
+    }
+    
     protected int compararEspañol(String str1, String str2) {
         str1 = str1.toLowerCase();
         str2 = str2.toLowerCase();
         return str1.compareTo(str2);
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+    
 }
