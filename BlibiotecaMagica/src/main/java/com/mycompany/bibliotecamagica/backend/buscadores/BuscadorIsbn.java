@@ -46,7 +46,7 @@ public class BuscadorIsbn extends Buscador {
             }
         }
         termino = System.nanoTime();
-        long lista2 = inicio - termino;
+        long lista2 = termino - inicio;
         mensaje = "Tiempo que tardo en lista: " + lista2 + " us.\n";
         mensaje += "Tiempo que tardo en arbol: " + arbol + " us.";
         return lista;

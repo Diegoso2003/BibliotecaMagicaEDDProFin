@@ -41,7 +41,7 @@ public abstract class Ordenador {
         long inicio = System.nanoTime();
         arreglo = realizarAlgoritmo(arreglo, comparador);
         long termino = System.nanoTime();
-        long tiempo = inicio - termino;
+        long tiempo = termino - inicio;
         mensaje = "El algoritmo " + nombre + " tardo en " + comparador + " "+ tiempo + "us";
         return arreglo;
     }

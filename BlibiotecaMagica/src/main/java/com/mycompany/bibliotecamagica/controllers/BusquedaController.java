@@ -180,10 +180,10 @@ public class BusquedaController implements Initializable {
         if(orden == null || comparador == null) return;
         LibroBiblioteca[] ordenados = orden.ordenar(comparador, actual);
         datos.clear();
-        Auxiliar.lanzarAlerta(Alert.AlertType.INFORMATION, "Comparacion", orden.getMensaje(), campo);
         for(LibroBiblioteca biblio : ordenados){
             agregarLibro(biblio);
         }
+        Auxiliar.lanzarAlerta(Alert.AlertType.INFORMATION, "Comparacion", orden.getMensaje(), campo);
     }
     
 }
